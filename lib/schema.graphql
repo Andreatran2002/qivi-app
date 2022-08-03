@@ -1,0 +1,467 @@
+"""
+The `@defer` directive may be provided for fragment spreads and inline fragments
+to inform the executor to delay the execution of the current fragment to
+indicate deprioritization of the current fragment. A query with `@defer`
+directive will cause the request to potentially return multiple responses, where
+non-deferred data is delivered in the initial response and data deferred is
+delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`.
+"""
+directive @defer(
+  """
+  If this argument label has a value other than null, it will be passed on to
+  the result of this defer directive. This label is intended to give client
+  applications a way to identify to which fragment a deferred result belongs to.
+  """
+  label: String
+
+  """Deferred when true."""
+  if: Boolean
+) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+The `@stream` directive may be provided for a field of `List` type so that the
+backend can leverage technology such as asynchronous iterators to provide a
+partial list in the initial response, and additional list items in subsequent
+responses. `@include` and `@skip` take precedence over `@stream`.
+"""
+directive @stream(
+  """
+  If this argument label has a value other than null, it will be passed on to
+  the result of this stream directive. This label is intended to give client
+  applications a way to identify to which fragment a streamed result belongs to.
+  """
+  label: String
+
+  """The initial elements that shall be send down to the consumer."""
+  initialCount: Int! = 0
+
+  """Streamed when true."""
+  if: Boolean
+) on FIELD
+
+"""
+The `@specifiedBy` directive is used within the type system definition language
+to provide a URL for specifying the behavior of custom scalar definitions.
+"""
+directive @specifiedBy(
+  """
+  The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types.
+  """
+  url: String!
+) on SCALAR
+
+type Bill {
+  id: String!
+  customerId: String!
+  invoice: String!
+  isSuccess: Boolean!
+  note: String!
+  lastUpdated: DateTime!
+  created: DateTime!
+  userInfo: User!
+  total: Decimal!
+  amountOwed: Decimal!
+}
+
+type BillCollectionSegment {
+  items: [Bill!]
+
+  """Information to aid in pagination."""
+  pageInfo: CollectionSegmentInfo!
+}
+
+input BillFilterInput {
+  and: [BillFilterInput!]
+  or: [BillFilterInput!]
+  id: StringOperationFilterInput
+  customerId: StringOperationFilterInput
+  total: ComparableDecimalOperationFilterInput
+  isSuccess: BooleanOperationFilterInput
+  amountOwed: ComparableDecimalOperationFilterInput
+  created: ComparableDateTimeOperationFilterInput
+  lastUpdated: ComparableDateTimeOperationFilterInput
+  note: StringOperationFilterInput
+  invoice: StringOperationFilterInput
+}
+
+input BillInput {
+  id: String!
+  customerId: String!
+  total: Decimal!
+  isSuccess: Boolean!
+  amountOwed: Decimal!
+  created: DateTime!
+  lastUpdated: DateTime!
+  note: String!
+  invoice: String!
+}
+
+input BillSortInput {
+  created: SortEnumType
+}
+
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+
+type CartItem {
+  id: String!
+  sessionId: String!
+  priceId: String!
+  quantity: Int!
+  priceInCart: ProductPrice!
+  shoppingSessionByCart: ShoppingSession!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+}
+
+input CartItemInput {
+  id: String!
+  sessionId: String!
+  priceId: String!
+  quantity: Int!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+}
+
+type Category {
+  id: String!
+  parentCategory: Category
+  description: String!
+  categoryId: String!
+  name: String!
+}
+
+"""Information about the offset pagination."""
+type CollectionSegmentInfo {
+  """
+  Indicates whether more items exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Indicates whether more items exist prior the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+}
+
+input ComparableDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input ComparableDecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal!]
+  nin: [Decimal!]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+"""The `DateTime` scalar represents an ISO-8601 compliant date time type."""
+scalar DateTime
+
+"""The built-in `Decimal` scalar type."""
+scalar Decimal
+
+type Discount {
+  name: String!
+  description: String!
+  discountPercent: Int!
+  active: Boolean!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+  id: String!
+}
+
+input DiscountInput {
+  name: String!
+  description: String!
+  discountPercent: Int!
+  active: Boolean!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+  id: String!
+}
+
+type Mutation {
+  createBill(customerId: String!, total: Decimal!, note: String!, invoice: String!, amountOwed: Decimal!): Bill!
+  updateBillAsync(bill: BillInput!, discount: DiscountInput!): Discount!
+  removeBill(id: String!): Boolean!
+  createDiscount(name: String!, description: String!, discountPercent: Int!, active: Boolean!, createdAt: DateTime!, modifiedAt: DateTime!): Discount!
+  removeDiscount(id: String!): Boolean!
+  createOrderItem(priceId: String!, orderId: String!, quantity: Int!): OrderItem!
+  updateOrderItem(orderItem: OrderItemInput!): OrderItem!
+  removeCartItem(id: String!): Boolean!
+  createOrderDetails(userId: String!): OrderDetails!
+  updateOrderDetails(order: OrderDetailsInput!): OrderDetails!
+  createProduct(name: String!, description: String!, categoryId: String!, image: String!): Product!
+  removeProduct(id: String!): Boolean!
+  createCategory(name: String!, description: String!, categoryId: String!, parentCategory: String!): Category!
+  removeCategory(id: String!): Boolean!
+  createUser(name: String!, fullName: String!, phoneNumber: String!, address: String!, password: String!): User
+  authenticationUser(name: String!, password: String!): User
+  authenticationByPhoneNumber(phoneNumber: String!, password: String!): User
+  updateUser(user: UserInput!): User!
+  removeUser(id: String!): Boolean!
+  userById(id: String!): User!
+  userByPhone(phoneNumber: String!): User!
+  createCartItem(priceId: String!, quantity: Int!, sessionId: String!): CartItem!
+  updateCartItem(cart: CartItemInput!): CartItem!
+  createShoppingSession(userId: String!, total: Decimal!): ShoppingSession!
+  updateCartItemAsync(shoppingSession: ShoppingSessionInput!): ShoppingSession!
+  createUserOrderInfo(userId: String!, recipient: String!, phoneNumber: String!, address: String!): UserOrderInfo
+  updateUserOrderInfo(info: UserOrderInfoInput!): UserOrderInfo!
+  createProductPrice(sku: String!, price: Decimal!, productId: String!): ProductPrice!
+  removeProductPrice(id: String!): Boolean!
+}
+
+type OrderDetails {
+  id: String!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+  total: Decimal!
+  userId: String!
+  userByOrder: User!
+  orderItemsByID: [OrderItem!]
+  status: String!
+}
+
+input OrderDetailsInput {
+  id: String!
+  status: String!
+  userId: String!
+  total: Decimal!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+}
+
+type OrderItem {
+  id: String!
+  orderId: String!
+  priceId: String!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+  quantity: Int!
+  orderDetailsByItems: OrderDetails
+  priceInOrder: ProductPrice!
+}
+
+input OrderItemInput {
+  id: String!
+  orderId: String!
+  priceId: String!
+  quantity: Int!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """
+  Indicates whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Indicates whether more edges exist prior the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Product {
+  id: String!
+  categoryId: String!
+  discountId: String
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+  name: String!
+  description: String!
+  isEmpty: Boolean!
+  image: String!
+  category: Category
+  discountByProduct: Discount
+  pricesByProductId: [ProductPrice!]!
+}
+
+type ProductPrice {
+  id: String!
+  sKU: String!
+  productId: String!
+  price: Decimal!
+  product: Product!
+}
+
+"""A connection to a list of items."""
+type ProductsPagingConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProductsPagingEdge!]
+
+  """A flattened list of the nodes."""
+  nodes: [Product!]
+}
+
+"""An edge in a connection."""
+type ProductsPagingEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Product!
+}
+
+type Query {
+  allBillByCustomer(customerId: String!, where: BillFilterInput): [Bill!]!
+  allBill(where: BillFilterInput, order: [BillSortInput!]): [Bill!]!
+  billById(id: String!): Bill!
+  billsWithPagination(skip: Int, take: Int): BillCollectionSegment
+  productsPaging(
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): ProductsPagingConnection
+  products: [Product!]!
+  productById(id: String!): Product!
+  productByDiscountId(id: String!): [Product!]!
+  category: [Category!]!
+  categoryById(id: String!): Category!
+  users(where: UserFilterInput): [User!]!
+  userById(userId: String!): User!
+  itemsByOrderId(orderId: String!): [OrderItem!]!
+  itemById(id: String!): OrderItem!
+  allCartBySessionId(sessionId: String!): [CartItem!]!
+  orderss: [OrderDetails!]!
+  orderDetailsById(id: String!): OrderDetails!
+  orderDetailsByUserId(id: String!): OrderDetails!
+  priceByProductId(productId: String!): [ProductPrice!]!
+  discounts: [Discount!]!
+  discountById(id: String!): Discount!
+  activeDiscounts: [Discount!]!
+  shoppingSessions: [ShoppingSession!]!
+  shoppingSessionById(id: String!): ShoppingSession!
+  shoppingSessionByUserId(id: String!): ShoppingSession!
+}
+
+type ShoppingSession {
+  id: String!
+  userId: String!
+  total: Decimal!
+  modifiedAt: DateTime!
+  createdAt: DateTime!
+  userByShoppingSession: User!
+  cartsBySessionId: [CartItem]!
+}
+
+input ShoppingSessionInput {
+  id: String!
+  userId: String!
+  total: Decimal!
+  createdAt: DateTime!
+  modifiedAt: DateTime!
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+type Subscription {
+  onCreateCustomer: User!
+  onUsersGet: [User!]!
+}
+
+type User {
+  id: String!
+  userName: String!
+  address: String!
+  fullName: String!
+  phoneNumber: String!
+  userInfo: [UserOrderInfo!]!
+}
+
+input UserFilterInput {
+  and: [UserFilterInput!]
+  or: [UserFilterInput!]
+  id: StringOperationFilterInput
+  userName: StringOperationFilterInput
+  fullName: StringOperationFilterInput
+  phoneNumber: StringOperationFilterInput
+  address: StringOperationFilterInput
+}
+
+input UserInput {
+  id: String!
+  userName: String!
+  fullName: String!
+  phoneNumber: String!
+  address: String!
+}
+
+type UserOrderInfo {
+  userId: String!
+  recipient: String!
+  phoneNumber: String!
+  address: String!
+  id: String!
+}
+
+input UserOrderInfoInput {
+  userId: String!
+  recipient: String!
+  phoneNumber: String!
+  address: String!
+  id: String!
+}
+

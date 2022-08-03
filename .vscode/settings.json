@@ -1,3 +1,10 @@
 {
-      "nuxt.isNuxtApp": false
+  "nuxt.isNuxtApp": false,
+  "files.exclude": {
+    "**/*.ast.gql.dart": true,
+    "**/*.req.gql.dart": true,
+    "**/*.data.gql.dart": true,
+    "**/*.var.gql.dart": true,
+    "**/*.gql.g.dart": true
+  }
 }

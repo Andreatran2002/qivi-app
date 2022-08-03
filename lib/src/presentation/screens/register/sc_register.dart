@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qivi_bill/src/model/repo/user_repository.dart';
-import 'package:qivi_bill/src/presentation/common_widgets/widget_logo_qivi.dart';
-import 'package:qivi_bill/src/utils/my_const/my_const.dart';
+import 'package:qivi_app/src/model/repo/user_repository.dart';
+import 'package:qivi_app/src/presentation/common_widgets/widget_logo_qivi.dart';
+import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 import 'barrel_register.dart';
 import 'bloc/bloc.dart';

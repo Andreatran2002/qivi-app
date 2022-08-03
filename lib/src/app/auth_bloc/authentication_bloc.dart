@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qivi_bill/src/app/auth_bloc/bloc.dart';
-import 'package:qivi_bill/src/model/repo/user_repository.dart';
+import 'package:qivi_app/src/app/auth_bloc/bloc.dart';
+import 'package:qivi_app/src/model/repo/user_repository.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {

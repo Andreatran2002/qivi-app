@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:qivi_bill/src/model/entity/entity.dart';
+import 'package:qivi_app/src/model/entity/entity.dart';
 part 'product.g.dart';
 
 @JsonSerializable()

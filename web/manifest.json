@@ -1,6 +1,6 @@
 {
-    "name": "qivi_bill",
-    "short_name": "qivi_bill",
+    "name": "qivi_app",
+    "short_name": "qivi_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

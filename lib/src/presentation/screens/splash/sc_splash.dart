@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:qivi_bill/src/presentation/common_widgets/widget_logo_qivi.dart';
-import 'package:qivi_bill/src/presentation/router.dart';
-import 'package:qivi_bill/src/utils/my_const/my_const.dart';
+import 'package:qivi_app/src/presentation/common_widgets/widget_logo_qivi.dart';
+import 'package:qivi_app/src/presentation/router.dart';
+import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,19 +10,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var logger = Logger();
   @override
   void initState() {
     super.initState();
-    logger.d("Splash screen");
-    // openLogin();
+    openLogin();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: COLOR_CONST.DEFAULT,
+        color: COLOR_CONST.BASE,
         child: Center(
           child: SizedBox(
             width: 240,
@@ -35,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void openLogin() {
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushNamed(context, AppRouter.LOGIN);
+      // Navigator.pushNamed(context, AppRouter.LOGIN);
     });
   }
 }

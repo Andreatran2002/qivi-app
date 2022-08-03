@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qivi_bill/src/model/repo/user_repository.dart';
-import 'package:qivi_bill/src/presentation/screens/login/bloc/bloc.dart';
-import 'package:qivi_bill/src/utils/validators.dart';
+import 'package:qivi_app/src/model/repo/user_repository.dart';
+import 'package:qivi_app/src/presentation/screens/login/bloc/bloc.dart';
+import 'package:qivi_app/src/utils/validators.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qivi_bill/src/app_config.dart';
-import 'package:qivi_bill/src/presentation/router.dart';
+import 'package:qivi_app/src/app_config.dart';
+import 'package:qivi_app/src/presentation/router.dart';
 
 import 'src/app/my_app.dart';
 
@@ -12,7 +12,7 @@ void main() {
       appName: "Qivi Dev",
       debugTag: false,
       flavorName: "dev",
-      initialRoute: AppRouter.SPLASH,
+      initialRoute: AppRouter.HOME,
       child: MyApp.runWidget(),
     ),
   );

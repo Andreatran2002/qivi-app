@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qivi_bill/src/app/auth_bloc/bloc.dart';
-import 'package:qivi_bill/src/utils/my_const/my_const.dart';
+import 'package:qivi_app/src/app/auth_bloc/bloc.dart';
+import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 import '../../router.dart';
 import 'bloc/bloc.dart';

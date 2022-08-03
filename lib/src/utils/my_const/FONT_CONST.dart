@@ -88,6 +88,7 @@ class FONT_CONST {
   static final MEDIUM_BLACK2 = MEDIUM.copyWith(color: COLOR_CONST.BLACK2);
   static final MEDIUM_BLACK2_14 = MEDIUM_BLACK2.copyWith(fontSize: 14);
   static final MEDIUM_BLACK2_16 = MEDIUM_BLACK2.copyWith(fontSize: 16);
+  static final MEDIUM_BLACK2_18 = MEDIUM_BLACK2.copyWith(fontSize: 18);
 
   static final MEDIUM_BLUE = MEDIUM.copyWith(color: COLOR_CONST.BLUE);
   static final MEDIUM_BLUE_14 = MEDIUM_BLUE.copyWith(fontSize: 14);
@@ -100,6 +101,7 @@ class FONT_CONST {
   static final SEMIBOLD_WHITE_18 = SEMIBOLD_WHITE.copyWith(fontSize: 18);
 
   static final SEMIBOLD_BLACK_24 = SEMIBOLD.copyWith(fontSize: 24);
+  static final SEMIBOLD_BLACK_18 = SEMIBOLD.copyWith(fontSize: 18);
 
   //OSWALD
   static final OSWALD_REGULAR = TextStyle(

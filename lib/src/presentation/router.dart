@@ -1,9 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:qivi_bill/src/presentation/screens/home/sc_home.dart';
-import 'package:qivi_bill/src/presentation/screens/login/sc_login.dart';
-import 'package:qivi_bill/src/presentation/screens/splash/sc_splash.dart';
+import 'package:qivi_app/src/presentation/screens/home/sc_home.dart';
+import 'package:qivi_app/src/presentation/screens/login/sc_login.dart';
+import 'package:qivi_app/src/presentation/screens/no_network/sc_no_network.dart';
+import 'package:qivi_app/src/presentation/screens/splash/sc_splash.dart';
 
 import 'screens/register/sc_register.dart';
 
@@ -11,6 +12,7 @@ class AppRouter {
   static const String HOME = '/';
   static const String SPLASH = '/splash';
   static const String LOGIN = '/login';
+  static const String NONETWORK = '/no_network';
   static const String ALL_SHOWS = '/all_shows';
   static const String SHOW_INFO = '/show_info';
   static const String BOOK_TIME_SLOT = '/book_time_slot';
@@ -30,6 +32,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case REGISTER:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case NONETWORK:
+        return MaterialPageRoute(builder: (_) => const NoNetworkScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

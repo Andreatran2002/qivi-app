@@ -1,0 +1,18 @@
+query PRODUCTPAGING {
+  productsPaging {
+    pageInfo {
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        name
+        description
+        pricesByProductId {
+          price
+        }
+      }
+    }
+  }
+}

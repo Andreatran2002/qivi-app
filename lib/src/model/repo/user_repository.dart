@@ -1,4 +1,4 @@
-import 'package:qivi_bill/src/model/entity/user.dart';
+import 'package:qivi_app/src/model/entity/user.dart';
 
 class UserRepository {
   Future<bool> signUp(
@@ -28,7 +28,7 @@ class UserRepository {
   }
 
   Future<String> getUser() async {
-    return "";
+    return "Vy nè ";
   }
 
   Future<bool> signIn(String phoneNumber, String password) async {

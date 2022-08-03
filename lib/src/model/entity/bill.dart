@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:qivi_bill/src/model/entity/entity.dart';
+import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'bill.g.dart';
