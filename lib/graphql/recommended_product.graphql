@@ -1,0 +1,12 @@
+query recommended_product {
+  recommended_product: products(first: 5) {
+    nodes {
+      id
+      name
+      pricesByProductId {
+        price
+        sKU
+      }
+    }
+  }
+}

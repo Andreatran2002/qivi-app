@@ -14,8 +14,7 @@ class WidgetChip extends StatelessWidget {
     return GestureDetector(
       onTap: callback,
       child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 10,
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
               color: COLOR_CONST.ORANGE2,
               borderRadius: BorderRadius.circular(10)),

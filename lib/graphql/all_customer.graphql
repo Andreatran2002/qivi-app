@@ -1,0 +1,9 @@
+query allCustumer {
+  users {
+    userName
+    userInfo {
+      address
+      phoneNumber
+    }
+  }
+}

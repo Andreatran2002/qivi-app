@@ -4,9 +4,9 @@ import 'package:qivi_app/src/model/entity/entity.dart';
 
 part 'home_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class HomeResponse {
-  List<Banner> banners;
+  List<Banner> banners = [];
 
   List<Categoryy> categories;
 
@@ -14,18 +14,19 @@ class HomeResponse {
   List<Product> recommendedProducts = [];
 
   // @JsonKey(name: "nearby_theatres")
-  // List<Cine> nearbyTheatres = [];
+  // List<Cine> nearbyTheatres = [];p
 
   // @JsonKey(name: "show_by_categories")
   // List<ShowByCategoryResponse> showByCategories = [];
 
-  HomeResponse({
-    required this.banners,
-    required this.categories,
-  });
+  HomeResponse({required this.categories, required this.recommendedProducts});
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) =>
       _$HomeResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+  @override
+  String toString() {
+    return 'Reponse{ categories: $categories , recommendedProducts: $recommendedProducts} ';
+  }
 }

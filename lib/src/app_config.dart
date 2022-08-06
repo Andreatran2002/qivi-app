@@ -7,6 +7,7 @@ class AppConfig extends InheritedWidget {
     required this.debugTag,
     required this.flavorName,
     required this.initialRoute,
+    // required this.client,
     required Widget child,
   }) : super(child: child);
 
@@ -14,7 +15,6 @@ class AppConfig extends InheritedWidget {
   final String flavorName;
   final String initialRoute;
   final bool debugTag;
-
   static AppConfig? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
   }

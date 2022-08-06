@@ -293,27 +293,6 @@ type PageInfo {
   endCursor: String
 }
 
-"""A connection to a list of items."""
-type PriceAndProductConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [PriceAndProductEdge!]
-
-  """A flattened list of the nodes."""
-  nodes: [ProductPrice!]
-}
-
-"""An edge in a connection."""
-type PriceAndProductEdge {
-  """A cursor for use in pagination."""
-  cursor: String!
-
-  """The item at the end of the edge."""
-  node: ProductPrice!
-}
-
 type Product {
   id: String!
   categoryId: String!
@@ -329,75 +308,12 @@ type Product {
   pricesByProductId: [ProductPrice!]!
 }
 
-input ProductFilterInput {
-  and: [ProductFilterInput!]
-  or: [ProductFilterInput!]
-  id: StringOperationFilterInput
-  name: StringOperationFilterInput
-  description: StringOperationFilterInput
-  categoryId: StringOperationFilterInput
-  discountId: StringOperationFilterInput
-  createdAt: ComparableDateTimeOperationFilterInput
-  modifiedAt: ComparableDateTimeOperationFilterInput
-  isEmpty: BooleanOperationFilterInput
-  image: StringOperationFilterInput
-}
-
 type ProductPrice {
   id: String!
   sKU: String!
   productId: String!
   price: Decimal!
   product: Product!
-}
-
-input ProductPriceFilterInput {
-  and: [ProductPriceFilterInput!]
-  or: [ProductPriceFilterInput!]
-  id: StringOperationFilterInput
-  sKU: StringOperationFilterInput
-  price: ComparableDecimalOperationFilterInput
-  productId: StringOperationFilterInput
-}
-
-input ProductPriceSortInput {
-  id: SortEnumType
-  sKU: SortEnumType
-  price: SortEnumType
-  productId: SortEnumType
-}
-
-"""A connection to a list of items."""
-type ProductsConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [ProductsEdge!]
-
-  """A flattened list of the nodes."""
-  nodes: [Product!]
-}
-
-"""An edge in a connection."""
-type ProductsEdge {
-  """A cursor for use in pagination."""
-  cursor: String!
-
-  """The item at the end of the edge."""
-  node: Product!
-}
-
-input ProductSortInput {
-  id: SortEnumType
-  name: SortEnumType
-  description: SortEnumType
-  categoryId: SortEnumType
-  discountId: SortEnumType
-  createdAt: SortEnumType
-  modifiedAt: SortEnumType
-  isEmpty: SortEnumType
-  image: SortEnumType
 }
 
 """A connection to a list of items."""
@@ -441,23 +357,7 @@ type Query {
     """
     before: String
   ): ProductsPagingConnection
-  products(
-    """Returns the first _n_ elements from the list."""
-    first: Int
-
-    """Returns the elements in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the last _n_ elements from the list."""
-    last: Int
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-    where: ProductFilterInput
-    order: [ProductSortInput!]
-  ): ProductsConnection
+  products: [Product!]!
   productById(id: String!): Product!
   productByDiscountId(id: String!): [Product!]!
   category: [Category!]!
@@ -470,23 +370,6 @@ type Query {
   orderss: [OrderDetails!]!
   orderDetailsById(id: String!): OrderDetails!
   orderDetailsByUserId(id: String!): OrderDetails!
-  priceAndProduct(
-    """Returns the first _n_ elements from the list."""
-    first: Int
-
-    """Returns the elements in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the last _n_ elements from the list."""
-    last: Int
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-    where: ProductPriceFilterInput
-    order: [ProductPriceSortInput!]
-  ): PriceAndProductConnection
   priceByProductId(productId: String!): [ProductPrice!]!
   discounts: [Discount!]!
   discountById(id: String!): Discount!

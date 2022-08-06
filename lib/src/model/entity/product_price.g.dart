@@ -8,8 +8,8 @@ part of 'product_price.dart';
 
 ProductPrice _$ProductPriceFromJson(Map<String, dynamic> json) => ProductPrice(
       id: json['id'] as String,
-      price: json['price'] as String,
-      productId: json['productId'] as String,
+      price: json['price'] as int,
+      productId: json['productId'] as String? ?? '',
       sKU: json['sKU'] as String,
     );
 

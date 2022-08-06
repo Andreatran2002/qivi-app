@@ -79,7 +79,7 @@ packages:
     source: hosted
     version: "2.0.9"
   build_runner:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.dartlang.org"
@@ -253,48 +253,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-  ferry:
-    dependency: "direct main"
-    description:
-      name: ferry
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.5-dev.3"
-  ferry_cache:
-    dependency: transitive
-    description:
-      name: ferry_cache
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.5-dev.10"
-  ferry_exec:
-    dependency: transitive
-    description:
-      name: ferry_exec
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.5-dev.2"
-  ferry_generator:
-    dependency: "direct main"
-    description:
-      name: ferry_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.0-dev.1"
-  ferry_hive_store:
-    dependency: "direct main"
-    description:
-      name: ferry_hive_store
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.4"
-  ferry_store:
-    dependency: transitive
-    description:
-      name: ferry_store
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.4"
   ffi:
     dependency: transitive
     description:
@@ -328,13 +286,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.0.1"
-  flutter_hooks:
-    dependency: transitive
-    description:
-      name: flutter_hooks
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.18.5+1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -393,21 +344,21 @@ packages:
       name: gql
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.2-alpha+1659450244766"
+    version: "0.13.2-alpha+1659554286763"
   gql_build:
     dependency: "direct main"
     description:
       name: gql_build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2-alpha+1659450244843"
+    version: "0.4.2-alpha+1659554286830"
   gql_code_builder:
     dependency: transitive
     description:
       name: gql_code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2-alpha+1659450244829"
+    version: "0.5.2-alpha+1659554286816"
   gql_dedupe_link:
     dependency: transitive
     description:
@@ -428,7 +379,7 @@ packages:
       name: gql_exec
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1-alpha+1659450244777"
+    version: "0.4.1-alpha+1659554286773"
   gql_http_link:
     dependency: "direct main"
     description:
@@ -451,19 +402,12 @@ packages:
     source: hosted
     version: "0.2.2"
   graphql:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: graphql
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.1"
-  graphql_flutter:
-    dependency: "direct main"
-    description:
-      name: graphql_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.0"
   graphs:
     dependency: transitive
     description:
@@ -695,13 +639,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.11.1"
   persistent_bottom_nav_bar:
     dependency: "direct main"
     description:

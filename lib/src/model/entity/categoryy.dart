@@ -1,22 +1,29 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'categoryy.g.dart';
 
 @JsonSerializable()
 class Categoryy extends Equatable {
-  int id;
+  String id;
   String name;
+  String description;
+  String categoryId;
+  Categoryy({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.categoryId,
+  });
 
-  Categoryy(this.id, this.name);
-
-  factory Categoryy.fromJson(Map<String, dynamic> json) =>
-      _$CategoryyFromJson(json);
+  factory Categoryy.fromJson(Map<String, dynamic> json) => json != null
+      ? _$CategoryyFromJson(json)
+      : Categoryy(id: "", name: "", description: "", categoryId: "");
 
   Map<String, dynamic> toJson() => _$CategoryyToJson(this);
 
   @override
-  List<Object> get props => [id, name];
+  List<Object> get props => [id, name, description, categoryId];
 
   @override
   String toString() {

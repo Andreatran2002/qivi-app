@@ -16,15 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _mapRefreshHomeToState(
       RefreshHome event, Emitter<HomeState> emit) async {
     try {
-      // final response = await homeRepository.getHomeData();
-      final response = HomeResponse(banners: [], categories: [
-        Categoryy(1, "Mì gói"),
-        Categoryy(2, "Tả"),
-        Categoryy(3, "Nước ngọt"),
-        Categoryy(4, "Mì gói"),
-        Categoryy(5, "Tả"),
-        Categoryy(6, "Nước ngọt")
-      ]);
+      final response = await homeRepository.getHomeData();
 
       emit(HomeLoaded(response));
     } catch (e) {
@@ -34,17 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _mapLoadHomeToState(LoadHome event, Emitter<HomeState> emit) async {
     try {
-      final response = HomeResponse(
-        banners: [],
-        categories: [
-          Categoryy(1, "Mì gói"),
-          Categoryy(2, "Tả"),
-          Categoryy(3, "Nước ngọt"),
-          Categoryy(4, "Mì gói"),
-          Categoryy(5, "Tả"),
-          Categoryy(6, "Nước ngọt")
-        ],
-      );
+      final response = await homeRepository.getHomeData();
 
       emit(HomeLoaded(response));
     } catch (e) {

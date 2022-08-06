@@ -5,7 +5,8 @@ part 'product_price.g.dart';
 @JsonSerializable()
 class ProductPrice extends Equatable {
   String id;
-  String price;
+  int price;
+  @JsonKey(defaultValue: "")
   String productId;
   String sKU;
   ProductPrice({

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
+import 'package:qivi_app/src/model/repo/home_repository.dart';
 import 'package:qivi_app/src/presentation/screens/home/bloc/bloc.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
-
 import 'barrel_home.dart';
 import 'home_banner/widget_home_banners.dart';
 import 'home_categories/bloc/bloc.dart';
-import 'home_categories/widget_home_categories.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,10 +16,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late HomeRepository homeRepository;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(LoadHome());
+
+    homeRepository = RepositoryProvider.of<HomeRepository>(context);
   }
 
   @override
@@ -55,6 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   const WidgetHomeBanner(),
                   WidgetHomeCategories(),
                   _buildContent(state),
+                  // StreamBuilder(
+                  //   stream: homeRepository.getAllProduct,
+                  //   builder: ((context, snapshot)s {
+                  //   return Container();
+                  // }))
                 ],
               ),
             ),
@@ -75,7 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
-              WidgetHomeRecommendedProducts(),
+              // WidgetHomeRecommendedProducts(),
+              FutureBuilder(
+                  future: homeRepository.getHomeData(),
+                  builder: (context, snapshot) {
+                    return Container();
+                  }),
               const SizedBox(height: 30),
               // WidgetNearbyCine(),
               // const SizedBox(height: 30),

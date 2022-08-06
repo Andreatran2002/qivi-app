@@ -16,6 +16,7 @@ class HomeCategoriesBloc
     subscription = homeBloc.stream.listen(
       (state) {
         if (state is HomeLoaded) {
+          print("Home Loaded");
           add(DisplayHomeCategories(state.response.categories));
         }
       },
