@@ -9,7 +9,7 @@ part of 'product.dart';
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       id: json['id'] as String,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       category: json['category'] == null
           ? null
           : Categoryy.fromJson(json['category'] as Map<String, dynamic>),
@@ -23,7 +23,6 @@ Map<String, dynamic> _$ProductToJson(Product instance) {
   final val = <String, dynamic>{
     'id': instance.id,
     'name': instance.name,
-    'description': instance.description,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -32,6 +31,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) {
     }
   }
 
+  writeNotNull('description', instance.description);
   writeNotNull('category', instance.category);
   writeNotNull('prices', instance.prices);
   return val;

@@ -12,6 +12,8 @@ class HomeResponse {
 
   @JsonKey(name: "recommended_products")
   List<Product> recommendedProducts = [];
+  @JsonKey(name: "best_price_products")
+  List<ProductPrice> bestPriceProducts = [];
 
   // @JsonKey(name: "nearby_theatres")
   // List<Cine> nearbyTheatres = [];p
@@ -19,7 +21,10 @@ class HomeResponse {
   // @JsonKey(name: "show_by_categories")
   // List<ShowByCategoryResponse> showByCategories = [];
 
-  HomeResponse({required this.categories, required this.recommendedProducts});
+  HomeResponse(
+      {required this.categories,
+      required this.recommendedProducts,
+      required this.bestPriceProducts});
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) =>
       _$HomeResponseFromJson(json);

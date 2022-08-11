@@ -7,6 +7,7 @@ import 'package:qivi_app/src/utils/my_const/my_const.dart';
 import 'barrel_home.dart';
 import 'home_banner/widget_home_banners.dart';
 import 'home_categories/bloc/bloc.dart';
+import 'recommended_products/bloc/bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,6 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+            create: (context) => RecommendedProductsBloc(
+                homeBloc: BlocProvider.of<HomeBloc>(context))),
         BlocProvider(
             create: (context) => HomeCategoriesBloc(
                 homeBloc: BlocProvider.of<HomeBloc>(context))),
@@ -80,13 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
-              // WidgetHomeRecommendedProducts(),
-              FutureBuilder(
-                  future: homeRepository.getHomeData(),
-                  builder: (context, snapshot) {
-                    return Container();
-                  }),
-              const SizedBox(height: 30),
+              WidgetHomeRecommendedProducts(),
+
               // WidgetNearbyCine(),
               // const SizedBox(height: 30),
               // WidgetHomeShowsCategory(),

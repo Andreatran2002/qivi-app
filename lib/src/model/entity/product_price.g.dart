@@ -11,6 +11,9 @@ ProductPrice _$ProductPriceFromJson(Map<String, dynamic> json) => ProductPrice(
       price: json['price'] as int,
       productId: json['productId'] as String? ?? '',
       sKU: json['sKU'] as String,
+      product: json['product'] == null
+          ? null
+          : Product.fromJson(json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ProductPriceToJson(ProductPrice instance) =>
@@ -19,4 +22,5 @@ Map<String, dynamic> _$ProductPriceToJson(ProductPrice instance) =>
       'price': instance.price,
       'productId': instance.productId,
       'sKU': instance.sKU,
+      'product': instance.product,
     };

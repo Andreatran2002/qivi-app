@@ -27,34 +27,60 @@ class HomeRepository {
     final QueryOptions options = QueryOptions(
       document: gql(
         r'''
-          query GetHomeData {
-  categories: category{
+          
+query GetHomeData ($first : Int!){
+  categories: category {
     id
     name
     description
     categoryId
   }
-  recommended_product: products(first: 5){
+  recommended_product: products(first: $first) {
     nodes {
+      id
+      name
+      description
+      category {
         id
         name
         description
-        
-        prices: pricesByProductId{
-          id
-          productId
-          price
-          sKU
-        } 
+        categoryId
       }
+      prices: pricesByProductId {
+        id
+        productId
+        price
+        sKU
+      }
+    }
   }
-  
+  best_price_product: priceAndProduct(first: $first, order: { price: ASC }) {
+    nodes {
+      id
+      productId
+      price
+      sKU
+      product {
+        id
+        name
+        description
+        category {
+          id
+          name
+          description
+          categoryId
+        }
+         
+      }
+    }
+  }
 }
+
       ''',
       ),
-      // variables: {
-      //   'nRepositories': nRepositories,
-      // },
+      variables: {
+        'first': 5,
+      },
     );
 
     final QueryResult result = await _client.query(options);
@@ -71,8 +97,14 @@ class HomeRepository {
     result.data!['recommended_product']['nodes'].forEach((a) {
       recommendedProduct.add(Product.fromJson(a));
     });
+    List<ProductPrice> bestPriceProducts = [];
+    result.data!['best_price_product']['nodes'].forEach((a) {
+      bestPriceProducts.add(ProductPrice.fromJson(a));
+    });
 
     return HomeResponse(
-        categories: categories, recommendedProducts: recommendedProduct);
+        categories: categories,
+        recommendedProducts: recommendedProduct,
+        bestPriceProducts: bestPriceProducts);
   }
 }

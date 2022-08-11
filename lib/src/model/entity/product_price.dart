@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:qivi_app/src/model/entity/entity.dart';
 part 'product_price.g.dart';
 
 @JsonSerializable()
@@ -9,11 +10,13 @@ class ProductPrice extends Equatable {
   @JsonKey(defaultValue: "")
   String productId;
   String sKU;
+  Product? product;
   ProductPrice({
     required this.id,
     required this.price,
     required this.productId,
     required this.sKU,
+    required this.product,
   });
 
   @override
