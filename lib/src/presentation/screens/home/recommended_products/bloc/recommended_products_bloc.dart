@@ -8,30 +8,12 @@ import 'bloc.dart';
 
 class RecommendedProductsBloc
     extends Bloc<RecommendedProductsEvent, RecommendedProductsState> {
-  HomeBloc homeBloc;
-  late StreamSubscription subscription;
-
-  RecommendedProductsBloc({required this.homeBloc})
-      : super(RecommendedProductsNotLoaded()) {
+  RecommendedProductsBloc() : super(RecommendedProductsNotLoaded()) {
     on<DisplayRecommendedProducts>(_mapDisplayRecommendedProductsToState);
-
-    subscription = homeBloc.stream.listen(
-      (state) {
-        if (state is HomeLoaded) {
-          add(DisplayRecommendedProducts(state.response.recommendedProducts));
-        }
-      },
-    );
   }
 
   void _mapDisplayRecommendedProductsToState(DisplayRecommendedProducts event,
       Emitter<RecommendedProductsState> emit) async {
     emit(RecommendedProductsLoaded(event.products));
-  }
-
-  @override
-  Future<void> close() {
-    subscription.cancel();
-    return super.close();
   }
 }

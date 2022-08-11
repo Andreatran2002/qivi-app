@@ -26,6 +26,8 @@ class FONT_CONST {
   static final REGULAR_DEFAULT = REGULAR.copyWith(color: COLOR_CONST.DEFAULT);
   static final REGULAR_DEFAULT_10 = REGULAR_DEFAULT.copyWith(fontSize: 10);
   static final REGULAR_DEFAULT_12 = REGULAR_DEFAULT.copyWith(fontSize: 12);
+  static final REGULAR_DEFAULT_14 = REGULAR_DEFAULT.copyWith(fontSize: 14);
+  static final REGULAR_DEFAULT_16 = REGULAR_DEFAULT.copyWith(fontSize: 16);
 
   static final REGULAR_WHITE = REGULAR.copyWith(color: COLOR_CONST.WHITE);
   static final REGULAR_WHITE_8 = REGULAR_WHITE.copyWith(fontSize: 8);

@@ -6,31 +6,12 @@ import 'package:qivi_app/src/presentation/screens/home/home_categories/bloc/bloc
 
 class HomeCategoriesBloc
     extends Bloc<HomeCategoriesEvent, HomeCategoriesState> {
-  HomeBloc homeBloc;
-  late StreamSubscription subscription;
-
-  HomeCategoriesBloc({required this.homeBloc})
-      : super(HomeCategoriesNotLoaded()) {
+  HomeCategoriesBloc() : super(HomeCategoriesNotLoaded()) {
     on<DisplayHomeCategories>(_mapDisplayHomeCategoriesToState);
-
-    subscription = homeBloc.stream.listen(
-      (state) {
-        if (state is HomeLoaded) {
-          print("Home Loaded");
-          add(DisplayHomeCategories(state.response.categories));
-        }
-      },
-    );
   }
 
   void _mapDisplayHomeCategoriesToState(
       DisplayHomeCategories event, Emitter<HomeCategoriesState> emit) async {
     emit(HomeCategoriesLoaded(event.categories));
-  }
-
-  @override
-  Future<void> close() {
-    subscription.cancel();
-    return super.close();
   }
 }

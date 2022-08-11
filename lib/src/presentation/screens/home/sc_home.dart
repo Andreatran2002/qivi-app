@@ -30,46 +30,51 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (context) => RecommendedProductsBloc(
-                homeBloc: BlocProvider.of<HomeBloc>(context))),
-        BlocProvider(
-            create: (context) => HomeCategoriesBloc(
-                homeBloc: BlocProvider.of<HomeBloc>(context))),
+        BlocProvider(create: (context) => RecommendedProductsBloc()),
+        BlocProvider(create: (context) => HomeCategoriesBloc()),
       ],
-      child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              title:
-                  Text("Quỳnh Vy Store", style: FONT_CONST.SEMIBOLD_BLACK_24),
-              leading: const Icon(Icons.menu),
-              actions: [
-                Container(
-                    margin: const EdgeInsets.all(15),
-                    decoration: const BoxDecoration(),
-                    child: const Icon(FontAwesomeIcons.cartShopping, size: 20))
-              ],
-            ),
-            body: Container(
-              color: COLOR_CONST.BASE,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const WidgetHomeBanner(),
-                  WidgetHomeCategories(),
-                  _buildContent(state),
-                  // StreamBuilder(
-                  //   stream: homeRepository.getAllProduct,
-                  //   builder: ((context, snapshot)s {
-                  //   return Container();
-                  // }))
+      child: BlocListener<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if (state is HomeLoaded) {
+            BlocProvider.of<HomeCategoriesBloc>(context)
+                .add(DisplayHomeCategories(state.response.categories));
+            BlocProvider.of<RecommendedProductsBloc>(context).add(
+                DisplayRecommendedProducts(state.response.recommendedProducts));
+          }
+        },
+        child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                title:
+                    Text("Quỳnh Vy Store", style: FONT_CONST.SEMIBOLD_BLACK_24),
+                leading: const Icon(Icons.menu),
+                actions: [
+                  Container(
+                      margin: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(),
+                      child:
+                          const Icon(FontAwesomeIcons.cartShopping, size: 20))
                 ],
               ),
+              body: Container(
+                color: COLOR_CONST.BASE,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    _buildContent(state),
+                    // StreamBuilder(
+                    //   stream: homeRepository.getAllProduct,
+                    //   builder: ((context, snapshot)s {
+                    //   return Container();
+                    // }))
+                  ],
+                ),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 
@@ -84,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
+              const WidgetHomeBanner(),
+              WidgetHomeCategories(),
               WidgetHomeRecommendedProducts(),
 
               // WidgetNearbyCine(),
