@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/app/auth_bloc/bloc.dart';
 import 'package:qivi_app/src/app/connectivity_bloc/bloc.dart';
+import 'package:qivi_app/src/model/entity/cart_item.dart';
 import 'package:qivi_app/src/model/repo/repo.dart';
 import 'package:qivi_app/src/model/repo/user_repository.dart';
 import 'package:qivi_app/src/presentation/router.dart';
@@ -85,7 +88,6 @@ class MyApp extends StatelessWidget {
   }
 
   static Widget runWidget() {
-    WidgetsFlutterBinding.ensureInitialized();
     // Bloc.observer = SimpleBlocObserver();
     final UserRepository userRepository = UserRepository();
     final HomeRepository homeRepository = HomeRepository();

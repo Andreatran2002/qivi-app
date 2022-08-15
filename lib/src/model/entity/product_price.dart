@@ -19,6 +19,16 @@ class ProductPrice extends Equatable {
     required this.product,
   });
 
+  factory ProductPrice.empty() {
+    return ProductPrice(
+      id: "",
+      price: 0,
+      productId: "",
+      sKU: "",
+      product: null,
+    );
+  }
+
   @override
   List<Object> get props => [id, price, productId, sKU];
   factory ProductPrice.fromJson(Map<String, dynamic> json) =>

@@ -72,6 +72,7 @@ class _ProductInfoDescriptionsState extends State<ProductInfoDescriptions> {
               ),
               onChanged: (ProductPrice? newValue) {
                 setState(() {
+                  print(newValue);
                   current = newValue!;
                 });
               },
