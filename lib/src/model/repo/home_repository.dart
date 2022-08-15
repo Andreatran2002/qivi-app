@@ -39,6 +39,7 @@ query GetHomeData ($first : Int!){
     nodes {
       id
       name
+      image
       description
       category {
         id
@@ -63,6 +64,7 @@ query GetHomeData ($first : Int!){
       product {
         id
         name
+        image
         description
         category {
           id

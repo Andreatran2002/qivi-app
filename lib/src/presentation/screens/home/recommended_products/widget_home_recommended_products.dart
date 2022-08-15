@@ -11,6 +11,7 @@ class WidgetHomeRecommendedProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: COLOR_CONST.WHITE),
+      margin: const EdgeInsets.only(bottom: 10),
       child: BlocBuilder<RecommendedProductsBloc, RecommendedProductsState>(
         builder: (context, state) {
           if (state is RecommendedProductsLoaded) {
@@ -53,40 +54,5 @@ class WidgetHomeRecommendedProducts extends StatelessWidget {
         itemCount: items.length,
       ),
     );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  const ProductCard(this.product, {Key? key}) : super(key: key);
-  final Product product;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(right: 10),
-        width: MediaQuery.of(context).size.width * 0.45,
-        height: MediaQuery.of(context).size.height * 0.22,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image(
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width * 0.4,
-              height: MediaQuery.of(context).size.height * 0.14,
-              image: const AssetImage(
-                'assets/logo-qivi.png',
-              ),
-            ),
-            Text(
-              product.name,
-              maxLines: 2,
-            ),
-            Container(
-              // alignment: Alignment.center,
-              child: Text(
-                  "${product.prices![0].price}đ/${product.prices![0].sKU} ",
-                  style: FONT_CONST.REGULAR_DEFAULT_14),
-            ),
-          ],
-        ));
   }
 }

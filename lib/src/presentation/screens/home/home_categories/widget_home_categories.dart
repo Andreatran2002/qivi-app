@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
+import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/home/home_categories/bloc/bloc.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
@@ -33,7 +34,10 @@ class WidgetHomeCategories extends StatelessWidget {
         itemBuilder: (context, index) {
           var item = items[index];
 
-          return WidgetChip(item.name);
+          return GestureDetector(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(AppRouter.ALL_PRODUCTS, arguments: item),
+              child: WidgetChip(item.name));
         },
         separatorBuilder: (context, index) {
           return const SizedBox(width: 20);

@@ -17,6 +17,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
               ?.map((e) => ProductPrice.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) {
@@ -32,6 +33,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) {
   }
 
   writeNotNull('description', instance.description);
+  writeNotNull('image', instance.image);
   writeNotNull('category', instance.category);
   writeNotNull('prices', instance.prices);
   return val;

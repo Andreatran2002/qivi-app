@@ -33,6 +33,7 @@ class COLOR_CONST {
   static final HexColor GRAY5 = HexColor("#C1C1C1");
   static final HexColor GRAY6 = HexColor("#707070");
   static final HexColor GRAY7 = HexColor("#DDDDDD");
+  static final HexColor GRAY8 = HexColor("#D9D9D9");
   static final HexColor ITEM_BG = HexColor("#F3F6F8");
   static final HexColor BLUE = HexColor("#222539");
   static final HexColor DIVIDER = HexColor("#33000000");

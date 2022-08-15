@@ -16,8 +16,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _mapRefreshHomeToState(
       RefreshHome event, Emitter<HomeState> emit) async {
     try {
+      print("refresh");
       final response = await homeRepository.getHomeData();
-
+      emit(HomeLoading());
       emit(HomeLoaded(response));
     } catch (e) {
       emit(HomeNotLoaded(e.toString()));

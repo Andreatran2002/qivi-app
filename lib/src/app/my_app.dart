@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qivi_app/src/app/auth_bloc/bloc.dart';
 import 'package:qivi_app/src/app/connectivity_bloc/bloc.dart';
-import 'package:qivi_app/src/model/repo/home_repository.dart';
+import 'package:qivi_app/src/model/repo/repo.dart';
 import 'package:qivi_app/src/model/repo/user_repository.dart';
 import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/home/bloc/bloc.dart';
 import 'package:qivi_app/src/presentation/screens/home/sc_home.dart';
 import 'package:qivi_app/src/presentation/screens/login/sc_login.dart';
 import 'package:qivi_app/src/presentation/screens/no_network/sc_no_network.dart';
+import 'package:qivi_app/src/presentation/screens/product_info/bloc/bloc.dart';
 import 'package:qivi_app/src/presentation/screens/splash/sc_splash.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
@@ -23,7 +24,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: config.debugTag,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        primaryColor: COLOR_CONST.DEFAULT,
+        hoverColor: COLOR_CONST.GREEN,
+        fontFamily: 'Poppins',
+      ),
       // ThemeData(
       //   brightness: Brightness.light,
       //   // primaryColor: COLOR_CONST.DEFAULT,
@@ -82,20 +89,17 @@ class MyApp extends StatelessWidget {
     // Bloc.observer = SimpleBlocObserver();
     final UserRepository userRepository = UserRepository();
     final HomeRepository homeRepository = HomeRepository();
+    final CategoryRepository categoryRepository = CategoryRepository();
+    final ProductRepository productRepository = ProductRepository();
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<UserRepository>(create: (context) => userRepository),
         RepositoryProvider<HomeRepository>(create: (context) => homeRepository),
-        // RepositoryProvider<ShowRepository>(
-        //     create: (context) => showRepository),
-        // RepositoryProvider<BookTimeSlotRepository>(
-        //     create: (context) => bookTimeSlotRepository),
-        // RepositoryProvider<SessionRepository>(
-        //     create: (context) => sessionRepository),
-        // RepositoryProvider<SeatSlotRepository>(
-        //     create: (context) => seatSlotRepository),
-        // RepositoryProvider<TicketRepo>(create: (context) => ticketRepo),
+        RepositoryProvider<CategoryRepository>(
+            create: (context) => categoryRepository),
+        RepositoryProvider<ProductRepository>(
+            create: (context) => productRepository),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -110,6 +114,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeBloc(homeRepository: homeRepository),
           ),
+
+          // BlocProvider(
+          //   create: (context) => AllProductBloc(homeRepository: homeRepository),
+          // ),
         ],
         child: MyApp(),
       ),

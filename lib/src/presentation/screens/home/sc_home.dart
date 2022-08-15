@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(LoadHome());
-
     homeRepository = RepositoryProvider.of<HomeRepository>(context);
   }
 
@@ -91,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const WidgetHomeBanner(),
               WidgetHomeCategories(),
+              WidgetHomeRecommendedProducts(),
               WidgetHomeRecommendedProducts(),
 
               // WidgetNearbyCine(),

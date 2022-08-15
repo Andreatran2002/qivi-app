@@ -11,6 +11,7 @@ class Product extends Equatable {
   String id;
   String name;
   String? description;
+  String? image;
   Categoryy? category;
   @JsonKey(defaultValue: [])
   List<ProductPrice>? prices;
@@ -20,6 +21,7 @@ class Product extends Equatable {
     required this.description,
     required this.category,
     required this.prices,
+    required this.image,
   });
 
   @override
