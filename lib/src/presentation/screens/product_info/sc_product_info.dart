@@ -29,31 +29,32 @@ class ProductInfoScreen extends StatelessWidget {
           create: (context) => BuyOptionBloc(),
         ),
       ],
-      child: SafeArea(
-          child: Scaffold(
-              appBar: AppBar(),
-              body: Container(
-                color: COLOR_CONST.BASE,
-                child: BlocProvider<ProductInfoBloc>(
-                  create: (context) => ProductInfoBloc(
-                    repo: RepositoryProvider.of<ProductRepository>(context),
-                  ),
-                  child: BlocConsumer<ProductInfoBloc, ProductInfoState>(
-                      buildWhen: (prev, current) {
-                    print(current);
-                    return current is ProductInfoLoaded;
-                  }, listener: (context, state) {
-                    if (state is ProductInfoLoaded) {
-                      // BlocProvider.of<HomeCategoriesBloc>(context)
-                      //     .add(DisplayHomeCategories(state.response.categories));
-                      // BlocProvider.of<RecommendedProductsBloc>(context).add(
-                      //     DisplayRecommendedProducts(state.response.recommendedProducts));
-                    }
-                  }, builder: (context, state) {
-                    return _buildContent();
-                  }),
-                ),
-              ))),
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Chi tiết sản phẩm"),
+          ),
+          body: Container(
+            color: COLOR_CONST.BASE,
+            child: BlocProvider<ProductInfoBloc>(
+              create: (context) => ProductInfoBloc(
+                repo: RepositoryProvider.of<ProductRepository>(context),
+              ),
+              child: BlocConsumer<ProductInfoBloc, ProductInfoState>(
+                  buildWhen: (prev, current) {
+                print(current);
+                return current is ProductInfoLoaded;
+              }, listener: (context, state) {
+                if (state is ProductInfoLoaded) {
+                  // BlocProvider.of<HomeCategoriesBloc>(context)
+                  //     .add(DisplayHomeCategories(state.response.categories));
+                  // BlocProvider.of<RecommendedProductsBloc>(context).add(
+                  //     DisplayRecommendedProducts(state.response.recommendedProducts));
+                }
+              }, builder: (context, state) {
+                return _buildContent();
+              }),
+            ),
+          )),
     );
   }
 

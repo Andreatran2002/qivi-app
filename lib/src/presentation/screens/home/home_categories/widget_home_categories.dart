@@ -36,7 +36,7 @@ class WidgetHomeCategories extends StatelessWidget {
 
           return GestureDetector(
               onTap: () => Navigator.of(context)
-                  .pushNamed(AppRouter.ALL_PRODUCTS, arguments: item),
+                  .pushNamed(AppRouter.ALL_PRODUCTS, arguments: index),
               child: WidgetChip(item.name));
         },
         separatorBuilder: (context, index) {

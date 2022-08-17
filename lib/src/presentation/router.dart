@@ -7,6 +7,7 @@ import 'package:qivi_app/src/presentation/screens/home/sc_home.dart';
 import 'package:qivi_app/src/presentation/screens/login/sc_login.dart';
 import 'package:qivi_app/src/presentation/screens/no_network/sc_no_network.dart';
 import 'package:qivi_app/src/presentation/screens/product_info/sc_product_info.dart';
+import 'package:qivi_app/src/presentation/screens/seasrch_product/sc_search_product.dart';
 import 'package:qivi_app/src/presentation/screens/splash/sc_splash.dart';
 
 import 'screens/register/sc_register.dart';
@@ -18,7 +19,7 @@ class AppRouter {
   static const String NONETWORK = '/no_network';
   static const String ALL_PRODUCTS = '/all_products';
   static const String PRODUCT_INFO = '/product_info';
-  static const String BOOK_TIME_SLOT = '/book_time_slot';
+  static const String SEARCH_PRODUCTS = '/search_products';
   static const String BOOK_SEAT_TYPE = '/book_seat_type';
   static const String BOOK_SEAT_SLOT = '/book_seat_slot';
   static const String LIST_ALL_CINE = '/list_all_cine';
@@ -39,7 +40,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NoNetworkScreen());
       case ALL_PRODUCTS:
         {
-          Categoryy current = settings.arguments as Categoryy;
+          int current = settings.arguments as int;
           return MaterialPageRoute(builder: (_) => AllProductScreen(current));
         }
       case PRODUCT_INFO:
@@ -47,6 +48,11 @@ class AppRouter {
           Product product = settings.arguments as Product;
           return MaterialPageRoute(builder: (_) => ProductInfoScreen(product));
         }
+      // case SEARCH_PRODUCTS:
+      //   {
+      //     return MaterialPageRoute(builder: (_) => SearchProductScreen());
+      //   }
+
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
