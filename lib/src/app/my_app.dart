@@ -116,6 +116,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeBloc(homeRepository: homeRepository),
           ),
+          BlocProvider(
+            create: (context) => ProductInfoBloc(
+              repo: RepositoryProvider.of<ProductRepository>(context),
+            ),
+          ),
 
           // BlocProvider(
           //   create: (context) => AllProductBloc(homeRepository: homeRepository),

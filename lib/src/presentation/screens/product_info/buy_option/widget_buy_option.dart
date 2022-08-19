@@ -13,13 +13,11 @@ class WidgetBuyOption extends StatelessWidget {
   final ProductPrice productPrice;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BuyOptionBloc, int>(
-      builder: (context, state) {
-        return Positioned(
-          bottom: 0,
-          right: 0,
-          left: 0,
-          child: Container(
+    return BlocProvider(
+      create: (context) => BuyOptionBloc(),
+      child: BlocBuilder<BuyOptionBloc, int>(
+        builder: (context, state) {
+          return Container(
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -79,9 +77,9 @@ class WidgetBuyOption extends StatelessWidget {
                                 MaterialStateProperty.resolveWith<Color?>(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.pressed))
-                                  return COLOR_CONST.GREEN;
+                                  return COLOR_CONST.ORANGE2.withOpacity(0.9);
                                 return COLOR_CONST
-                                    .GREEN3; // Use the component's default.
+                                    .ORANGE2; // Use the component's default.
                               },
                             ),
                           ),
@@ -95,9 +93,9 @@ class WidgetBuyOption extends StatelessWidget {
                     ],
                   ),
                 ],
-              )),
-        );
-      },
+              ));
+        },
+      ),
     );
   }
 }

@@ -7,17 +7,23 @@ class ProductInfoBloc extends Bloc<ProductInfoEvent, ProductInfoState> {
   final ProductRepository repo;
 
   ProductInfoBloc({required this.repo}) : super(ProductInfoLoading()) {
-    on<LoadProductInfo>(_mapLoadProductInfoToState);
+    on<OpenScreen>(_mapOpenScreenToState);
+    on<ClickBtnBuy>(_mapClickBtnBuyToState);
+    on<OpenedBuyProductScreen>(_mapOpenedBuyProductScreenToState);
   }
 
-  void _mapLoadProductInfoToState(
-      LoadProductInfo event, Emitter<ProductInfoState> emit) async {
-    try {
-      emit(ProductInfoLoading());
-      final product = await repo.getProductById(event.id);
-      emit(ProductInfoLoaded(product));
-    } catch (e) {
-      emit(ProductInfoNotLoaded(e.toString()));
-    }
+  void _mapOpenScreenToState(
+      OpenScreen event, Emitter<ProductInfoState> emit) async {
+    emit(InitialProductInfoState());
+  }
+
+  void _mapClickBtnBuyToState(
+      ClickBtnBuy event, Emitter<ProductInfoState> emit) async {
+    emit(OpenBuyProductScreen(open: true));
+  }
+
+  void _mapOpenedBuyProductScreenToState(
+      OpenedBuyProductScreen event, Emitter<ProductInfoState> emit) async {
+    emit(OpenBuyProductScreen(open: false));
   }
 }

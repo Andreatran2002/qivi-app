@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/model/repo/repo.dart';
 import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
-import 'package:qivi_app/src/presentation/common_widgets/product_card_hozi.dart';
 
 class SearchProduct extends SearchDelegate<Product> {
   final ProductRepository repo;
   List<Product> products = [];
+  List<String> _oldFilters = const [];
 
   SearchProduct(this.repo);
 

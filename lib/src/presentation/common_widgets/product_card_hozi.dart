@@ -14,7 +14,7 @@ class ProductCardHoz extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         ProductInfoBloc(repo: RepositoryProvider.of<ProductRepository>(context))
-            .add(LoadProductInfo(product.id));
+            .add(OpenScreen());
         Navigator.of(context)
             .pushNamed(AppRouter.PRODUCT_INFO, arguments: product);
       },

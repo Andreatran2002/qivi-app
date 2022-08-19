@@ -29,7 +29,7 @@ class _ProductInfoDescriptionsState extends State<ProductInfoDescriptions> {
         //     style: FONT_CONST.REGULAR_BLACK2_12.copyWith(
         //         fontStyle: FontStyle.italic, fontWeight: FontWeight.w500)),
         _buildDesc(),
-        _buildProductSKU(),
+        // _buildProductSKU(),
       ]),
     );
   }

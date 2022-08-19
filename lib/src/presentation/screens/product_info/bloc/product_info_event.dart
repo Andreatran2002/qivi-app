@@ -1,20 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:qivi_app/src/model/entity/entity.dart';
 
 abstract class ProductInfoEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class LoadProductInfo extends ProductInfoEvent {
-  final String id;
-  LoadProductInfo(this.id);
+class OpenScreen extends ProductInfoEvent {
+  @override
+  List<Object> get props => [];
 }
 
 class ClickBtnBuy extends ProductInfoEvent {
-  final String productId;
+  ProductPrice price;
 
-  ClickBtnBuy(this.productId);
+  ClickBtnBuy(this.price);
 
   @override
-  List<Object> get props => [productId];
+  List<Object> get props => [price];
+}
+
+class OpenedBuyProductScreen extends ProductInfoEvent {
+  @override
+  List<Object> get props => [];
 }

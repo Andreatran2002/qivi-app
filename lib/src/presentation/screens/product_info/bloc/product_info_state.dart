@@ -1,39 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
 
-abstract class ProductInfoState extends Equatable {}
-
-class ProductInfoLoading extends ProductInfoState {
+abstract class ProductInfoState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class ProductInfoLoaded extends ProductInfoState {
-  final Product product;
+class ProductInfoLoading extends ProductInfoState {}
 
-  ProductInfoLoaded(this.product);
+class ProductInfoLoaded extends ProductInfoState {}
 
+class InitialProductInfoState extends ProductInfoState {
   @override
-  List<Object> get props {
-    return [product];
-  }
-
-  @override
-  String toString() {
-    return 'ProductInfoLoaded{product: $product}';
-  }
+  List<Object> get props => [];
 }
 
-class ProductInfoNotLoaded extends ProductInfoState {
-  final String e;
+class OpenBuyProductScreen extends ProductInfoState {
+  bool open = false;
 
-  ProductInfoNotLoaded(this.e);
-
-  @override
-  String toString() {
-    return 'ProductInfoNotLoaded{e: $e}';
-  }
+  OpenBuyProductScreen({
+    required this.open,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
