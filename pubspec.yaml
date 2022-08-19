@@ -29,6 +29,7 @@ dependencies:
   path_provider: any
   gql_build: ^0.4.2-alpha+1659554286830
   graphql: ^5.1.1
+  uuid: ^3.0.6
   
   
 dev_dependencies:

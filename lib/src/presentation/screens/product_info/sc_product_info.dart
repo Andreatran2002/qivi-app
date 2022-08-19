@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/model/repo/product_repository.dart';
 import 'package:qivi_app/src/presentation/screens/product_info/buy_option/widget_buy_option.dart';
@@ -19,13 +20,20 @@ class ProductInfoScreen extends StatefulWidget {
 }
 
 class _ProductInfoScreenState extends State<ProductInfoScreen> {
-  late ProductRepository repo;
   late BuildContext _context;
   late ProductPrice currentSku;
+
   @override
   void initState() {
     currentSku = widget.product.prices![0];
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+
+    super.dispose();
   }
 
   @override

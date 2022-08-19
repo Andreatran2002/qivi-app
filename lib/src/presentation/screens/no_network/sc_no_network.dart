@@ -12,8 +12,15 @@ class _NoNetworkScreenState extends State<NoNetworkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            color: COLOR_CONST.BASE,
-            child: const Center(child: Text("No network screen"))));
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/disconnected.jpeg"),
+          const Text("Không có kết nối. Vui lòng thử lại!"),
+        ],
+      ),
+    ));
   }
 }

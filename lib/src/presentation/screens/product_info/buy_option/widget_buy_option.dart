@@ -3,13 +3,19 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:qivi_app/src/model/entity/cart_item.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
+import 'package:qivi_app/src/model/local/hive_provider.dart';
+import 'package:qivi_app/src/model/local/repo/cart_item_repo.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 import 'bloc/bloc.dart';
 
 class WidgetBuyOption extends StatelessWidget {
-  const WidgetBuyOption(this.productPrice, {Key? key}) : super(key: key);
+  WidgetBuyOption(this.productPrice, {Key? key}) : super(key: key);
+
   final ProductPrice productPrice;
   @override
   Widget build(BuildContext context) {
@@ -89,7 +95,25 @@ class WidgetBuyOption extends StatelessWidget {
                               child: Text("Mua",
                                   style: FONT_CONST.MEDIUM_WHITE
                                       .copyWith(fontSize: 20))),
-                          onPressed: () {})
+                          onPressed: () {
+                            CartItemLocalRepository().addCartItemToLocal(
+                                state,
+                                productPrice.id,
+                                "",
+                                state * productPrice.price.toDouble());
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Snackbar message'),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              margin: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).size.height - 100,
+                              ),
+                            ));
+                            // final items = HiveProvider().Box<CartItem>.values.toList().cast<CartItem>();
+                          })
                     ],
                   ),
                 ],
