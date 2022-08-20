@@ -3,7 +3,12 @@ import 'package:qivi_app/src/model/local/hive_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class CartItemLocalRepository {
-  void addCartItemToLocal(
+  static int countItem() {
+    final box = HiveProvider.getCartItems();
+    return box.length;
+  }
+
+  static void addCartItemToLocal(
       {required int quantity,
       required String priceId,
       required String image,
@@ -20,26 +25,19 @@ class CartItemLocalRepository {
 
     final box = HiveProvider.getCartItems();
     box.put(priceId, cartItem);
-    print(box.keys);
-    print(box.get(cartItem.priceId));
+    // print(box.keys);
+    // print(box.get(cartItem.priceId));
   }
 
-  void editCartItemToLocal(
-      {required CartItem cartItem,
-      required int quantity,
-      required String sku}) async {
+  static void editCartItemToLocal(
+      {required CartItem cartItem, required int quantity}) async {
     cartItem.quantity = quantity;
-    cartItem.sku = sku;
-
-    final box = HiveProvider.getCartItems();
-
-    box.put(cartItem.quantity, cartItem);
-    print(box.get(cartItem.priceId));
+    cartItem.save();
   }
 
-  void deleteCartItemFromLocal(String priceId) {
+  static void deleteCartItemFromLocal(String priceId) {
     final box = HiveProvider.getCartItems();
     box.delete(priceId);
-    print(box.keys);
+    // print(box.keys);
   }
 }

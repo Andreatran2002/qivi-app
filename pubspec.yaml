@@ -30,6 +30,7 @@ dependencies:
   gql_build: ^0.4.2-alpha+1659554286830
   graphql: ^5.1.1
   uuid: ^3.0.6
+  badges: ^2.0.3
   
   
 dev_dependencies:

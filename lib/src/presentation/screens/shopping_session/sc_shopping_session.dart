@@ -5,7 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/entity/cart_item.dart';
 import 'package:qivi_app/src/model/local/hive_provider.dart';
+import 'package:qivi_app/src/model/local/repo/cart_item_repo.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
+import 'package:qivi_app/src/utils/my_dialog.dart';
 
 class ShoppingSessionScreen extends StatefulWidget {
   const ShoppingSessionScreen({Key? key}) : super(key: key);
@@ -40,22 +42,103 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
         ),
       );
     } else {
-      return Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(8),
-              itemCount: carts.length,
-              itemBuilder: (BuildContext context, int index) {
-                final cart = carts[index];
+      return Stack(children: [
+        Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.all(8),
+                itemCount: carts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final cart = carts[index];
 
-                return _buildCartItem(context, cart);
-              },
+                  return _buildCartItem(context, cart);
+                },
+              ),
             ),
-          ),
-        ],
-      );
+          ],
+        ),
+        Positioned(bottom: 0, right: 0, left: 0, child: _buildBuyOption())
+      ]);
     }
+  }
+
+  Widget _buildBuyOption() {
+    return ValueListenableBuilder<Box<CartItem>>(
+      valueListenable: HiveProvider.getCartItems().listenable(),
+      builder: (context, box, _) {
+        final carts = box.values.toList().cast<CartItem>();
+        int result = 0;
+        carts
+            .forEach(((element) => result += element.price * element.quantity));
+        return Container(
+            height: MediaQuery.of(context).size.height * 0.18,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40),
+              boxShadow: [BoxShadow()],
+            ),
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Thành tiền : ", style: FONT_CONST.MEDIUM_BLACK2_18),
+                    Text((result).toString(),
+                        style: FONT_CONST.MEDIUM_BLACK2_18),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed))
+                                return COLOR_CONST.ORANGE2.withOpacity(0.9);
+                              return COLOR_CONST
+                                  .ORANGE2; // Use the component's default.
+                            },
+                          ),
+                        ),
+                        child: Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text("Mua",
+                                style: FONT_CONST.MEDIUM_WHITE
+                                    .copyWith(fontSize: 20))),
+                        onPressed: () {
+                          // CartItemLocalRepository().addCartItemToLocal(
+                          //     quantity: state,
+                          //     priceId: productPrice.id,
+                          //     image: image,
+                          //     price: productPrice.price,
+                          //     name: name,
+                          //     sku: productPrice.sKU);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Snackbar message'),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            margin: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height - 100,
+                            ),
+                          ));
+                          // final items = HiveProvider().Box<CartItem>.values.toList().cast<CartItem>();
+                        })
+                  ],
+                ),
+              ],
+            ));
+      },
+    );
   }
 
   Widget _buildCartItem(
@@ -64,6 +147,7 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
   ) {
     // final date = DateFormat.yMMMd().format(CartItem.createdDate);
     return ExpansionTile(
+      key: UniqueKey(),
       title: Text(
         cart.name,
         maxLines: 1,
@@ -82,7 +166,7 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
           Container(
               padding:
                   const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-              width: MediaQuery.of(context).size.width * 0.2,
+              width: MediaQuery.of(context).size.width * 0.3,
               decoration: BoxDecoration(
                 color: COLOR_CONST.GRAY8.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
@@ -91,17 +175,31 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {},
-                    child: const Icon(FontAwesomeIcons.minus),
+                    onTap: () {
+                      if (cart.quantity > 1) {
+                        setState(() {
+                          CartItemLocalRepository.editCartItemToLocal(
+                              cartItem: cart, quantity: cart.quantity - 1);
+                        });
+                      } else {
+                        setState(() {
+                          CartItemLocalRepository.deleteCartItemFromLocal(
+                              cart.priceId);
+                        });
+                      }
+                    },
+                    child: const Icon(FontAwesomeIcons.minus, size: 17),
                   ),
                   Text(cart.quantity.toString(),
                       style: FONT_CONST.REGULAR.copyWith(fontSize: 20)),
                   GestureDetector(
                     onTap: () {
-                      // BlocProvider.of<BuyOptionBloc>(context)
-                      //     .add(BuyOptionIncrementPressed());
+                      setState(() {
+                        CartItemLocalRepository.editCartItemToLocal(
+                            cartItem: cart, quantity: cart.quantity + 1);
+                      });
                     },
-                    child: const Icon(FontAwesomeIcons.plus),
+                    child: const Icon(FontAwesomeIcons.plus, size: 17),
                   )
                 ],
               )),
@@ -113,12 +211,20 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
               fontSize: 18,
               fontStyle: FontStyle.italic)),
       children: <Widget>[
-        Container(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            width: MediaQuery.of(context).size.width,
-            color: COLOR_CONST.RED2,
-            child: Center(
-                child: Text("Xoá sản phẩm", style: FONT_CONST.MEDIUM_WHITE_14)))
+        GestureDetector(
+          onTap: () {
+            MyDialog.deleteDialog(context, () {
+              CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
+            }, "Xoá sản phẩm");
+          },
+          child: Container(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              width: MediaQuery.of(context).size.width,
+              color: COLOR_CONST.RED2,
+              child: Center(
+                  child:
+                      Text("Xoá sản phẩm", style: FONT_CONST.MEDIUM_WHITE_14))),
+        )
       ],
     );
   }

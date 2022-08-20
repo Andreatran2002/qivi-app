@@ -98,7 +98,7 @@ class WidgetBuyOption extends StatelessWidget {
                                   style: FONT_CONST.MEDIUM_WHITE
                                       .copyWith(fontSize: 20))),
                           onPressed: () {
-                            CartItemLocalRepository().addCartItemToLocal(
+                            CartItemLocalRepository.addCartItemToLocal(
                                 quantity: state,
                                 priceId: productPrice.id,
                                 image: image,

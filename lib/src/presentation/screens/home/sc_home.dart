@@ -1,7 +1,11 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:qivi_app/src/model/entity/cart_item.dart';
+import 'package:qivi_app/src/model/local/hive_provider.dart';
+import 'package:qivi_app/src/model/local/repo/cart_item_repo.dart';
 import 'package:qivi_app/src/model/repo/home_repository.dart';
 import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/home/bloc/bloc.dart';
@@ -61,8 +65,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: const BoxDecoration(),
                     child: GestureDetector(
                         onTap: _openSessionShopping,
-                        child: const Icon(FontAwesomeIcons.cartShopping,
-                            size: 20)))
+                        child: ValueListenableBuilder<Box<CartItem>>(
+                          valueListenable:
+                              HiveProvider.getCartItems().listenable(),
+                          builder: (context, box, _) {
+                            final count = box.length;
+
+                            return Badge(
+                              badgeContent: Text(
+                                  CartItemLocalRepository.countItem()
+                                      .toString(),
+                                  style: FONT_CONST.REGULAR_WHITE_10),
+                              child: const Icon(FontAwesomeIcons.cartShopping,
+                                  size: 20),
+                            );
+                          },
+                        )))
               ],
             ),
             body: Container(
