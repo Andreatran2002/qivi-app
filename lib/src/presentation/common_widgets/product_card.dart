@@ -19,11 +19,14 @@ class ProductCard extends StatelessWidget {
             .pushNamed(AppRouter.PRODUCT_INFO, arguments: product);
       },
       child: Container(
+          clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             color: COLOR_CONST.WHITE,
           ),
           margin: const EdgeInsets.only(
+            left: 10,
+            right: 10,
             top: 10,
           ),
           width: MediaQuery.of(context).size.width * 0.45,
@@ -34,7 +37,7 @@ class ProductCard extends StatelessWidget {
               product.image == null
                   ? Image(
                       fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.45,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       height: MediaQuery.of(context).size.height * 0.14,
                       image: const AssetImage(
                         'assets/logo-qivi.png',
@@ -43,7 +46,7 @@ class ProductCard extends StatelessWidget {
                   : Image.network(
                       product.image!,
                       fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.45,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       height: MediaQuery.of(context).size.height * 0.14,
                     ),
               Container(

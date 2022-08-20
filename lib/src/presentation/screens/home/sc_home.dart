@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/repo/home_repository.dart';
+import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/home/bloc/bloc.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 import 'barrel_home.dart';
@@ -23,6 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(LoadHome());
     homeRepository = RepositoryProvider.of<HomeRepository>(context);
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
   }
 
   @override
@@ -51,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                     margin: const EdgeInsets.all(15),
                     decoration: const BoxDecoration(),
-                    child: const Icon(FontAwesomeIcons.cartShopping, size: 20))
+                    child: GestureDetector(
+                        onTap: _openSessionShopping,
+                        child: const Icon(FontAwesomeIcons.cartShopping,
+                            size: 20)))
               ],
             ),
             body: Container(
@@ -118,4 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
+
+  void _openSessionShopping() =>
+      Navigator.of(context).pushNamed(AppRouter.SHOPPING_SESSION);
 }

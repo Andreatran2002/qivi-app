@@ -120,7 +120,7 @@ class _WidgetProductInCategoryState extends State<WidgetProductInCategory>
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
+                      maxCrossAxisExtent: 220,
                       mainAxisExtent: 190,
                       childAspectRatio: 6 / 5,
                       crossAxisSpacing: 10,

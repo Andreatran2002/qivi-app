@@ -30,13 +30,6 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
   }
 
   @override
-  void dispose() {
-    Hive.close();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
@@ -105,7 +98,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
               ),
               onChanged: (ProductPrice? newValue) {
                 setState(() {
-                  print(newValue);
+                  // print(newValue!.id);
                   currentSku = newValue!;
                 });
               },
@@ -130,7 +123,8 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
       backgroundColor: COLOR_CONST.TRANS,
       context: _context,
       builder: (BuildContext context) {
-        return WidgetBuyOption(currentSku);
+        return WidgetBuyOption(
+            currentSku, widget.product.name, widget.product.image!);
       },
     );
   }

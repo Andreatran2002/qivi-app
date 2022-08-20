@@ -42,8 +42,7 @@ class WidgetHomeRecommendedProducts extends StatelessWidget {
   _buildListProduct(context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.22,
-      child: ListView.separated(
-        separatorBuilder: (context, int) => SizedBox(width: 15),
+      child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {

@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'package:qivi_app/src/model/entity/entity.dart';
 
 part 'cart_item.g.dart';
 
 @HiveType(typeId: 0)
 class CartItem extends HiveObject {
   @HiveField(0)
-  String id;
+  String name;
   @HiveField(1)
   String priceId;
   @HiveField(2)
@@ -16,12 +17,15 @@ class CartItem extends HiveObject {
   @HiveField(3)
   int quantity;
   @HiveField(4)
-  double total;
+  int price;
+  @HiveField(5)
+  String sku;
   CartItem({
-    required this.id,
-    required this.quantity,
+    required this.name,
     required this.priceId,
     required this.image,
-    required this.total,
+    required this.quantity,
+    required this.price,
+    required this.sku,
   });
 }

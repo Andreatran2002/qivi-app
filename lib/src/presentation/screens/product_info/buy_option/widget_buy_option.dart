@@ -14,8 +14,10 @@ import 'package:qivi_app/src/utils/my_const/my_const.dart';
 import 'bloc/bloc.dart';
 
 class WidgetBuyOption extends StatelessWidget {
-  WidgetBuyOption(this.productPrice, {Key? key}) : super(key: key);
-
+  WidgetBuyOption(this.productPrice, this.name, this.image, {Key? key})
+      : super(key: key);
+  final String name;
+  final String image;
   final ProductPrice productPrice;
   @override
   Widget build(BuildContext context) {
@@ -97,10 +99,12 @@ class WidgetBuyOption extends StatelessWidget {
                                       .copyWith(fontSize: 20))),
                           onPressed: () {
                             CartItemLocalRepository().addCartItemToLocal(
-                                state,
-                                productPrice.id,
-                                "",
-                                state * productPrice.price.toDouble());
+                                quantity: state,
+                                priceId: productPrice.id,
+                                image: image,
+                                price: productPrice.price,
+                                name: name,
+                                sku: productPrice.sKU);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text('Snackbar message'),
                               behavior: SnackBarBehavior.floating,
