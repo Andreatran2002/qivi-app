@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qivi_app/src/app/auth_bloc/bloc.dart';
+import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 import '../../router.dart';
@@ -39,85 +40,79 @@ class _WidgetLoginFormState extends State<WidgetLoginForm> {
         if (state.isSuccess) {
           _authenticationBloc.add(LoggedIn());
         }
-
-        if (state.isFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Đăng nhập thất bại'),
-                    Icon(Icons.error),
-                  ],
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
-        }
-
-        if (state.isSubmitting) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Đang xử lí ...'),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              ),
-            );
-        }
       },
       child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-            color: COLOR_CONST.WHITE,
-          ),
-          child: Form(
-            child: Column(
+        return Stack(
+          children: [
+            ListView(
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text('Đăng nhập tài khoản',
-                      style: FONT_CONST.SEMIBOLD_BLACK_24),
-                ),
-                const SizedBox(height: 20),
-                _buildTextFieldPhoneNumber(),
-                const SizedBox(height: 14),
-                _buildTextFieldPassword(),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(AppRouter.REGISTER),
-                      child: Text(
-                        "Đăng ký tài khoản",
-                        style: FONT_CONST.REGULAR_GRAY4_12,
-                      ),
+                WidgetLogoQivi(),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
+                    color: COLOR_CONST.WHITE,
+                  ),
+                  child: Form(
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text('Đăng nhập tài khoản',
+                              style: FONT_CONST.SEMIBOLD_BLACK_24),
+                        ),
+                        const SizedBox(height: 20),
+                        _buildTextFieldPhoneNumber(),
+                        const SizedBox(height: 14),
+                        _buildTextFieldPassword(),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(AppRouter.REGISTER),
+                              child: Text(
+                                "Đăng ký tài khoản",
+                                style: FONT_CONST.REGULAR_GRAY4_12,
+                              ),
+                            ),
+                            Text(
+                              "Quên mật khẩu?",
+                              style: FONT_CONST.REGULAR_GRAY4_12,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        _buildButtonLogin(state),
+                        // const SizedBox(height: 15),
+                      ],
                     ),
-                    Text(
-                      "Quên mật khẩu?",
-                      style: FONT_CONST.REGULAR_GRAY4_12,
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                _buildButtonLogin(state),
-                // const SizedBox(height: 15),
               ],
             ),
-          ),
+            state.isSubmitting
+                ? Container(
+                    color: Colors.black.withOpacity(0.7),
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ))
+                : Container(),
+            state.isSuccess
+                ? Image.asset(
+                    "assets/images/success.gif",
+                    height: 125.0,
+                    width: 125.0,
+                  )
+                : Container(),
+          ],
         );
       }),
     );

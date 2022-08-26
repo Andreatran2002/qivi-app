@@ -31,6 +31,7 @@ dependencies:
   graphql: ^5.1.1
   uuid: ^3.0.6
   badges: ^2.0.3
+  shared_preferences: ^2.0.15
   
   
 dev_dependencies:
@@ -44,3 +45,4 @@ flutter:
   assets:
     - assets/logo-qivi.png
     - assets/images/
+    - assets/banners/

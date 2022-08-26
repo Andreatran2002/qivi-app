@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/model/repo/product_repository.dart';
+import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
 import 'package:qivi_app/src/presentation/screens/product_info/buy_option/widget_buy_option.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
@@ -33,9 +34,8 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.product.name),
-        ),
+        appBar:
+            AppBar(title: Text(widget.product.name), actions: [ShoppingCart()]),
         body: Container(
           color: COLOR_CONST.BASE,
           child: BlocConsumer<ProductInfoBloc, ProductInfoState>(

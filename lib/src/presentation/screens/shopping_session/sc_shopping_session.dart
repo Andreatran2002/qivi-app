@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/entity/cart_item.dart';
 import 'package:qivi_app/src/model/local/hive_provider.dart';
 import 'package:qivi_app/src/model/local/repo/cart_item_repo.dart';
+import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 import 'package:qivi_app/src/utils/my_dialog.dart';
 
@@ -72,13 +73,13 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
         carts
             .forEach(((element) => result += element.price * element.quantity));
         return Container(
-            height: MediaQuery.of(context).size.height * 0.18,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
               boxShadow: [BoxShadow()],
             ),
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 Row(
@@ -110,28 +111,11 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
                         child: Container(
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * 0.8,
-                            child: Text("Mua",
+                            child: Text("Đặt hàng",
                                 style: FONT_CONST.MEDIUM_WHITE
                                     .copyWith(fontSize: 20))),
                         onPressed: () {
-                          // CartItemLocalRepository().addCartItemToLocal(
-                          //     quantity: state,
-                          //     priceId: productPrice.id,
-                          //     image: image,
-                          //     price: productPrice.price,
-                          //     name: name,
-                          //     sku: productPrice.sKU);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Snackbar message'),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height - 100,
-                            ),
-                          ));
-                          // final items = HiveProvider().Box<CartItem>.values.toList().cast<CartItem>();
+                          Navigator.of(context).pushNamed(AppRouter.ORDER);
                         })
                   ],
                 ),
@@ -146,86 +130,94 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
     CartItem cart,
   ) {
     // final date = DateFormat.yMMMd().format(CartItem.createdDate);
-    return ExpansionTile(
+    return Dismissible(
       key: UniqueKey(),
-      title: Text(
-        cart.name,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      leading: Image.asset(
-        'assets/images/product.png',
-        // width: MediaQuery.of(context).size.width * 0.3,
-        // height: MediaQuery.of(context).size.width * 0.3,
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(cart.sku),
-          Container(
-              padding:
-                  const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-              width: MediaQuery.of(context).size.width * 0.3,
-              decoration: BoxDecoration(
-                color: COLOR_CONST.GRAY8.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (cart.quantity > 1) {
+      onDismissed: (direction) {
+        MyDialog.deleteDialog(context, () {
+          CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
+        }, "Xoá sản phẩm");
+      },
+      background: Container(color: Colors.red),
+      child: ExpansionTile(
+        title: Text(
+          cart.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        leading: Image.asset(
+          'assets/images/product.png',
+          // width: MediaQuery.of(context).size.width * 0.3,
+          // height: MediaQuery.of(context).size.width * 0.3,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(cart.sku),
+            Container(
+                padding:
+                    const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                width: MediaQuery.of(context).size.width * 0.3,
+                decoration: BoxDecoration(
+                  color: COLOR_CONST.GRAY8.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (cart.quantity > 1) {
+                          setState(() {
+                            CartItemLocalRepository.editCartItemToLocal(
+                                cartItem: cart, quantity: cart.quantity - 1);
+                          });
+                        } else {
+                          setState(() {
+                            CartItemLocalRepository.deleteCartItemFromLocal(
+                                cart.priceId);
+                          });
+                        }
+                      },
+                      child: const Icon(FontAwesomeIcons.minus, size: 17),
+                    ),
+                    Text(cart.quantity.toString(),
+                        style: FONT_CONST.REGULAR.copyWith(fontSize: 20)),
+                    GestureDetector(
+                      onTap: () {
                         setState(() {
                           CartItemLocalRepository.editCartItemToLocal(
-                              cartItem: cart, quantity: cart.quantity - 1);
+                              cartItem: cart, quantity: cart.quantity + 1);
                         });
-                      } else {
-                        setState(() {
-                          CartItemLocalRepository.deleteCartItemFromLocal(
-                              cart.priceId);
-                        });
-                      }
-                    },
-                    child: const Icon(FontAwesomeIcons.minus, size: 17),
-                  ),
-                  Text(cart.quantity.toString(),
-                      style: FONT_CONST.REGULAR.copyWith(fontSize: 20)),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        CartItemLocalRepository.editCartItemToLocal(
-                            cartItem: cart, quantity: cart.quantity + 1);
-                      });
-                    },
-                    child: const Icon(FontAwesomeIcons.plus, size: 17),
-                  )
-                ],
-              )),
-        ],
+                      },
+                      child: const Icon(FontAwesomeIcons.plus, size: 17),
+                    )
+                  ],
+                )),
+          ],
+        ),
+        trailing: Text(cart.price.toString(),
+            style: FONT_CONST.MEDIUM.copyWith(
+                color: COLOR_CONST.RED2,
+                fontSize: 18,
+                fontStyle: FontStyle.italic)),
+        // children: <Widget>[
+        //   GestureDetector(
+        //     onTap: () {
+        //       MyDialog.deleteDialog(context, () {
+        //         CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
+        //       }, "Xoá sản phẩm");
+        //     },
+        //     child: Container(
+        //         padding: const EdgeInsets.only(top: 10, bottom: 10),
+        //         width: MediaQuery.of(context).size.width,
+        //         color: COLOR_CONST.RED2,
+        //         child: Center(
+        //             child:
+        //                 Text("Xoá sản phẩm", style: FONT_CONST.MEDIUM_WHITE_14))),
+        //   )
+        // ],
       ),
-      trailing: Text(cart.price.toString(),
-          style: FONT_CONST.MEDIUM.copyWith(
-              color: COLOR_CONST.RED2,
-              fontSize: 18,
-              fontStyle: FontStyle.italic)),
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            MyDialog.deleteDialog(context, () {
-              CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
-            }, "Xoá sản phẩm");
-          },
-          child: Container(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              width: MediaQuery.of(context).size.width,
-              color: COLOR_CONST.RED2,
-              child: Center(
-                  child:
-                      Text("Xoá sản phẩm", style: FONT_CONST.MEDIUM_WHITE_14))),
-        )
-      ],
     );
   }
 }

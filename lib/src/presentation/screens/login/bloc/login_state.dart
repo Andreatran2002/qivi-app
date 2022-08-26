@@ -7,6 +7,7 @@ class LoginState {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
+  final String errorMessage;
 
   bool get isFormValid => isPhoneNumberValid && isPasswordValid;
 
@@ -16,72 +17,73 @@ class LoginState {
     required this.isSubmitting,
     required this.isSuccess,
     required this.isFailure,
+    required this.errorMessage,
   });
 
   factory LoginState.empty() {
     return const LoginState(
-      isPhoneNumberValid: true,
-      isPasswordValid: true,
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: false,
-    );
+        isPhoneNumberValid: true,
+        isPasswordValid: true,
+        isSubmitting: false,
+        isSuccess: false,
+        isFailure: false,
+        errorMessage: "");
   }
 
   factory LoginState.loading() {
     return const LoginState(
-      isPhoneNumberValid: true,
-      isPasswordValid: true,
-      isSubmitting: true,
-      isSuccess: false,
-      isFailure: false,
-    );
+        isPhoneNumberValid: true,
+        isPasswordValid: true,
+        isSubmitting: true,
+        isSuccess: false,
+        isFailure: false,
+        errorMessage: "");
   }
 
-  factory LoginState.failure() {
-    return const LoginState(
-      isPhoneNumberValid: true,
-      isPasswordValid: true,
-      isSuccess: false,
-      isSubmitting: false,
-      isFailure: true,
-    );
+  factory LoginState.failure(String error) {
+    return LoginState(
+        isPhoneNumberValid: true,
+        isPasswordValid: true,
+        isSuccess: false,
+        isSubmitting: false,
+        isFailure: true,
+        errorMessage: error);
   }
 
   factory LoginState.success() {
     return const LoginState(
-      isPhoneNumberValid: true,
-      isPasswordValid: true,
-      isSubmitting: false,
-      isSuccess: true,
-      isFailure: false,
-    );
+        isPhoneNumberValid: true,
+        isPasswordValid: true,
+        isSubmitting: false,
+        isSuccess: true,
+        isFailure: false,
+        errorMessage: "");
   }
 
   LoginState update({bool? isPhoneNumberValid, bool? isPasswordValid}) {
     return copyWith(
-      isPhoneNumberValid: isPhoneNumberValid,
-      isPasswordValid: isPasswordValid,
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: false,
-    );
+        isPhoneNumberValid: isPhoneNumberValid,
+        isPasswordValid: isPasswordValid,
+        isSubmitting: false,
+        isSuccess: false,
+        isFailure: false,
+        errorMessage: "");
   }
 
-  LoginState copyWith({
-    bool? isPhoneNumberValid,
-    bool? isPasswordValid,
-    bool? isSubmitting,
-    bool? isSuccess,
-    bool? isFailure,
-  }) {
+  LoginState copyWith(
+      {bool? isPhoneNumberValid,
+      bool? isPasswordValid,
+      bool? isSubmitting,
+      bool? isSuccess,
+      bool? isFailure,
+      String? errorMessage}) {
     return LoginState(
-      isPhoneNumberValid: isPhoneNumberValid ?? this.isPhoneNumberValid,
-      isPasswordValid: isPasswordValid ?? this.isPasswordValid,
-      isSubmitting: isSubmitting ?? this.isSubmitting,
-      isSuccess: isSuccess ?? this.isSuccess,
-      isFailure: isFailure ?? this.isFailure,
-    );
+        isPhoneNumberValid: isPhoneNumberValid ?? this.isPhoneNumberValid,
+        isPasswordValid: isPasswordValid ?? this.isPasswordValid,
+        isSubmitting: isSubmitting ?? this.isSubmitting,
+        isSuccess: isSuccess ?? this.isSuccess,
+        isFailure: isFailure ?? this.isFailure,
+        errorMessage: errorMessage ?? this.errorMessage);
   }
 
   @override

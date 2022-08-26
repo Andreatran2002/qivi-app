@@ -25,14 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
         create: (context) => LoginBloc(userRepository: userRepository),
         child: Container(
           color: COLOR_CONST.BASELOGIN,
-          child: ListView(
-            children: [_buildLogo(), _buildLoginForm()],
-          ),
+          child: _buildLoginForm(),
         ),
       ),
     );
   }
 
-  _buildLogo() => WidgetLogoQivi();
   _buildLoginForm() => WidgetLoginForm();
 }

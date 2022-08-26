@@ -7,6 +7,7 @@ import 'package:qivi_app/src/model/entity/cart_item.dart';
 import 'package:qivi_app/src/model/local/hive_provider.dart';
 import 'package:qivi_app/src/model/local/repo/cart_item_repo.dart';
 import 'package:qivi_app/src/model/repo/home_repository.dart';
+import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
 import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/home/bloc/bloc.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
@@ -59,29 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title:
                   Text("Quỳnh Vy Store", style: FONT_CONST.SEMIBOLD_BLACK_24),
               leading: const Icon(Icons.menu),
-              actions: [
-                Container(
-                    margin: const EdgeInsets.all(15),
-                    decoration: const BoxDecoration(),
-                    child: GestureDetector(
-                        onTap: _openSessionShopping,
-                        child: ValueListenableBuilder<Box<CartItem>>(
-                          valueListenable:
-                              HiveProvider.getCartItems().listenable(),
-                          builder: (context, box, _) {
-                            final count = box.length;
-
-                            return Badge(
-                              badgeContent: Text(
-                                  CartItemLocalRepository.countItem()
-                                      .toString(),
-                                  style: FONT_CONST.REGULAR_WHITE_10),
-                              child: const Icon(FontAwesomeIcons.cartShopping,
-                                  size: 20),
-                            );
-                          },
-                        )))
-              ],
+              actions: [ShoppingCart()],
             ),
             body: Container(
               color: COLOR_CONST.BASE,
@@ -114,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
-              const WidgetHomeBanner(),
+              WidgetHomeBanner(),
               WidgetHomeCategories(),
               WidgetHomeRecommendedProducts(),
               WidgetHomeRecommendedProducts(),
@@ -147,7 +126,4 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
-
-  void _openSessionShopping() =>
-      Navigator.of(context).pushNamed(AppRouter.SHOPPING_SESSION);
 }

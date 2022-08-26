@@ -6,6 +6,7 @@ import 'package:qivi_app/src/presentation/screens/all_product/sc_all_product.dar
 import 'package:qivi_app/src/presentation/screens/home/sc_home.dart';
 import 'package:qivi_app/src/presentation/screens/login/sc_login.dart';
 import 'package:qivi_app/src/presentation/screens/no_network/sc_no_network.dart';
+import 'package:qivi_app/src/presentation/screens/order/sc_order.dart';
 import 'package:qivi_app/src/presentation/screens/product_info/sc_product_info.dart';
 import 'package:qivi_app/src/presentation/screens/seasrch_product/sc_search_product.dart';
 import 'package:qivi_app/src/presentation/screens/shopping_session/sc_shopping_session.dart';
@@ -22,7 +23,7 @@ class AppRouter {
   static const String PRODUCT_INFO = '/product_info';
   static const String SEARCH_PRODUCTS = '/search_products';
   static const String SHOPPING_SESSION = '/shopping_session';
-  static const String BOOK_SEAT_SLOT = '/book_seat_slot';
+  static const String ORDER = '/order';
   static const String LIST_ALL_CINE = '/list_all_cine';
   static const String REGISTER = '/register';
   static const String LIST_MY_TICKET = '/list_my_ticket';
@@ -51,8 +52,12 @@ class AppRouter {
         }
       case SHOPPING_SESSION:
         {
-          return MaterialPageRoute(builder: (_) => ShoppingSessionScreen());
+          return MaterialPageRoute(
+            builder: (_) => ShoppingSessionScreen(),
+          );
         }
+      case ORDER:
+        return MaterialPageRoute(builder: (_) => OrderScreen());
       // case SEARCH_PRODUCTS:
       //   {
       //     return MaterialPageRoute(builder: (_) => SearchProductScreen());

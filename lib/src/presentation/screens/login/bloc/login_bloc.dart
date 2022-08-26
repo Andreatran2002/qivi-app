@@ -36,16 +36,32 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       emit(LoginState.loading());
 
-      await userRepository.signIn(event.phoneNumber, event.password);
-      bool isSignedIn = await userRepository.isSignedIn();
-
-      if (isSignedIn) {
+      String result =
+          await userRepository.signIn(event.phoneNumber, event.password);
+      if (result == 'success') {
         emit(LoginState.success());
       } else {
-        emit(LoginState.failure());
+        switch (result) {
+          case 'account-not-available':
+            emit(LoginState.failure(
+                "Tài khoản không tồn tại. Vui lòng thử lại."));
+
+            break;
+          case 'wrong-password':
+            emit(LoginState.failure("Sai mật khẩu. Vui lòng thử lại."));
+
+            break;
+          case 'undefined-error':
+            emit(LoginState.failure("Lỗi không xác định. Vui lòng thử lại."));
+
+            break;
+          default:
+            emit(LoginState.failure("Lỗi không xác định. Vui lòng thử lại."));
+            break;
+        }
       }
     } catch (e) {
-      emit(LoginState.failure());
+      emit(LoginState.failure("Lỗi không xác định. Vui lòng thử lại."));
     }
   }
 }

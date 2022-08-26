@@ -16,7 +16,8 @@ class ProductCardHoz extends StatelessWidget {
         ProductInfoBloc(repo: RepositoryProvider.of<ProductRepository>(context))
             .add(OpenScreen());
         Navigator.of(context)
-            .pushNamed(AppRouter.PRODUCT_INFO, arguments: product);
+            .pushNamed(AppRouter.PRODUCT_INFO, arguments: product,
+            );
       },
       child: Card(
         surfaceTintColor: COLOR_CONST.WHITE,
