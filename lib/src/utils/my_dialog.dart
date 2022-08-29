@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyDialog {
-  static void deleteDialog(
-      BuildContext context, VoidCallback callback, String title) {
-    showDialog<void>(
+  static Future<bool> deleteDialog(
+      BuildContext context, VoidCallback callbacks, String title) async {
+    return await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
@@ -21,14 +21,14 @@ class MyDialog {
             TextButton(
               child: const Text('Có'),
               onPressed: () {
-                Navigator.of(context).pop();
-                callback();
+                Navigator.of(context).pop(true);
+                callbacks();
               },
             ),
             TextButton(
               child: const Text('Không'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(false);
               },
             ),
           ],

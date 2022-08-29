@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:graphql/client.dart';
@@ -7,6 +8,7 @@ import 'package:qivi_app/src/model/local/pref.dart';
 
 class UserRepository {
   Pref localRef = LocalPref();
+  Pref memoryRef = MemoryPref();
   Future<String> signUp(
       {required String fullName,
       required String address,
@@ -55,8 +57,11 @@ class UserRepository {
     return await localRef.getString("quynhvyuser") != null;
   }
 
-  Future<String> getUser() async {
-    return await localRef.getString("quynhvyuser");
+  Future<User> getUser() async {
+    Map<String, dynamic> userString =
+        jsonDecode(await localRef.getString("quynhvyuser"));
+    print("GetUser : $userString");
+    return User.fromJson(userString);
   }
 
   Future<String> signIn(String phoneNumber, String password) async {
@@ -89,10 +94,15 @@ class UserRepository {
       }
 
       if (result.data!['authenticationByPhoneNumber']['message'] == "success") {
+        print("success");
         print(result.data!['authenticationByPhoneNumber']['data']['id']);
-
-        await localRef.saveString("quynhvyuser",
-            result.data!['authenticationByPhoneNumber']['data']['id']);
+        print("data ne" +
+            User.fromJson(result.data!['authenticationByPhoneNumber']['data'])
+                .toString());
+        await localRef.saveString(
+            "quynhvyuser",
+            jsonEncode(User.fromJson(
+                result.data!['authenticationByPhoneNumber']['data'])));
       }
 
       return result.data!['authenticationByPhoneNumber']['message'];

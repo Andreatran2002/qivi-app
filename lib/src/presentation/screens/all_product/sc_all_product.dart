@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qivi_app/src/model/entity/entity.dart';
-import 'package:qivi_app/src/model/repo/category_repository.dart';
-import 'package:qivi_app/src/model/repo/client_repository.dart';
 import 'package:qivi_app/src/model/repo/repo.dart';
-import 'package:qivi_app/src/presentation/router.dart';
 import 'package:qivi_app/src/presentation/screens/seasrch_product/widgets/search_product.dart';
 import 'package:qivi_app/src/utils/my_const/COLOR_CONST.dart';
 import 'package:qivi_app/src/utils/my_const/FONT_CONST.dart';
@@ -73,10 +68,14 @@ class _AllProductScreenState extends State<AllProductScreen>
                           .toList()),
                   title: const Text("Tất cả sản phẩm"),
                 ),
-                body: TabBarView(
-                    children: categories
-                        .map((item) => WidgetProductInCategory(item.categoryId))
-                        .toList()),
+                body: Container(
+                  color: COLOR_CONST.WHITE,
+                  child: TabBarView(
+                      children: categories
+                          .map((item) =>
+                              WidgetProductInCategory(item.categoryId))
+                          .toList()),
+                ),
               ),
             );
           }
@@ -84,7 +83,17 @@ class _AllProductScreenState extends State<AllProductScreen>
             return const Text("Error");
           }
           return Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(title: const Text("Tất cả sản phẩm"), actions: [
+                IconButton(
+                    onPressed: () {
+                      // Navigator.of(context)
+                      //     .pushNamed(AppRouter.SEARCH_PRODUCTS);
+                      showSearch(
+                          context: context,
+                          delegate: SearchProduct(productRepo));
+                    },
+                    icon: Icon(Icons.search))
+              ]),
               body: const Center(child: CircularProgressIndicator()));
         });
   }

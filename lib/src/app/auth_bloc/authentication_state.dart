@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:qivi_app/src/model/entity/user.dart';
 
 abstract class AuthenticationState extends Equatable {
   const AuthenticationState();
@@ -10,16 +11,16 @@ abstract class AuthenticationState extends Equatable {
 class Uninitialized extends AuthenticationState {}
 
 class Authenticated extends AuthenticationState {
-  final String displayName;
+  final User user;
 
-  const Authenticated(this.displayName);
+  const Authenticated(this.user);
 
   @override
   List<Object> get props => [];
 
   @override
   String toString() {
-    return 'Authenticated{displayName: $displayName}';
+    return 'Authenticated{displayName: $user.name}';
   }
 }
 

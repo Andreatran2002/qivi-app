@@ -32,6 +32,7 @@ dependencies:
   uuid: ^3.0.6
   badges: ^2.0.3
   shared_preferences: ^2.0.15
+  fab_circular_menu: ^1.0.2
   
   
 dev_dependencies:

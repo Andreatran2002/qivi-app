@@ -105,13 +105,13 @@ class _WidgetLoginFormState extends State<WidgetLoginForm> {
                       child: CircularProgressIndicator(color: Colors.white),
                     ))
                 : Container(),
-            state.isSuccess
-                ? Image.asset(
-                    "assets/images/success.gif",
-                    height: 125.0,
-                    width: 125.0,
-                  )
-                : Container(),
+            // state.isSuccess
+            //     ? Image.asset(
+            //         "assets/images/success.gif",
+            //         height: 125.0,
+            //         width: 125.0,
+            //       )
+            //     : Container(),
           ],
         );
       }),

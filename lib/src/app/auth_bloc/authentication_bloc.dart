@@ -27,6 +27,7 @@ class AuthenticationBloc
         emit(Unauthenticated());
       }
     } catch (e) {
+      print(e);
       emit(Unauthenticated());
     }
   }
@@ -34,8 +35,10 @@ class AuthenticationBloc
   void _mapUserLoggedInToState(
     LoggedIn event,
     Emitter<AuthenticationState> emit,
-  ) {
-    emit(const Authenticated("Phuong Vy "));
+  ) async {
+    final currentUser = await _userRepository.getUser();
+
+    emit(Authenticated(currentUser));
   }
 
   void _mapUserLoggedOutToState(

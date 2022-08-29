@@ -111,7 +111,7 @@ class _WidgetProductInCategoryState extends State<WidgetProductInCategory>
   Widget build(BuildContext context) {
     return _isFirstLoadRunning
         ? const Center(
-            child: const CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,7 +121,7 @@ class _WidgetProductInCategoryState extends State<WidgetProductInCategory>
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 220,
-                      mainAxisExtent: 190,
+                      mainAxisExtent: 200,
                       childAspectRatio: 6 / 5,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),

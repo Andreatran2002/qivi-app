@@ -22,9 +22,15 @@ class WidgetHomeRecommendedProducts extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Text("Sản phẩm mới ",
-                        style: FONT_CONST.SEMIBOLD_BLACK_18)),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Sản phẩm mới ",
+                            style: FONT_CONST.SEMIBOLD_BLACK_18),
+                        Text("Xem thêm ", style: FONT_CONST.REGULAR_BLACK2_12),
+                      ],
+                    )),
                 const SizedBox(height: 5),
                 _buildListProduct(context)
               ],
@@ -41,7 +47,7 @@ class WidgetHomeRecommendedProducts extends StatelessWidget {
 
   _buildListProduct(context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.22,
+      height: MediaQuery.of(context).size.height * 0.26,
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,

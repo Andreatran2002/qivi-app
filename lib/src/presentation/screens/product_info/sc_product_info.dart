@@ -37,7 +37,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
         appBar:
             AppBar(title: Text(widget.product.name), actions: [ShoppingCart()]),
         body: Container(
-          color: COLOR_CONST.BASE,
+          color: COLOR_CONST.WHITE,
           child: BlocConsumer<ProductInfoBloc, ProductInfoState>(
               buildWhen: (prev, current) {
             return current is InitialProductInfoState;
@@ -55,7 +55,9 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
     return Stack(
       children: [
         ListView(children: [
-          ProductInfoImage(widget.product.image!),
+          Hero(
+              tag: Text(widget.product.id),
+              child: ProductInfoImage(widget.product.image!)),
           ProductInfoDescriptions(widget.product),
           _buildProductSKU()
         ]),

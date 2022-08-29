@@ -26,7 +26,7 @@ class WidgetHomeCategories extends StatelessWidget {
 
   _buildListCategory() {
     return Container(
-      height: 25,
+      height: 30,
       margin: const EdgeInsets.all(10),
       child: ListView.separated(
         shrinkWrap: true,

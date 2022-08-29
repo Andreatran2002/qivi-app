@@ -27,9 +27,11 @@ class WidgetBuyOption extends StatelessWidget {
         builder: (context, state) {
           return Container(
               height: MediaQuery.of(context).size.height * 0.2,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
                 boxShadow: [BoxShadow()],
               ),
               padding: const EdgeInsets.all(25),
@@ -105,17 +107,17 @@ class WidgetBuyOption extends StatelessWidget {
                                 price: productPrice.price,
                                 name: name,
                                 sku: productPrice.sKU);
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text('Snackbar message'),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              margin: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height - 100,
-                              ),
-                            ));
+                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            //   content: Text('Snackbar message'),
+                            //   behavior: SnackBarBehavior.floating,
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(24),
+                            //   ),
+                            //   margin: EdgeInsets.only(
+                            //     bottom:
+                            //         MediaQuery.of(context).size.height - 100,
+                            //   ),
+                            // ));
                             // final items = HiveProvider().Box<CartItem>.values.toList().cast<CartItem>();
                           })
                     ],

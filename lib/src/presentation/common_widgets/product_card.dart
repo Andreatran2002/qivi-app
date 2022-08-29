@@ -22,50 +22,73 @@ class ProductCard extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: COLOR_CONST.WHITE,
+            color: COLOR_CONST.BASE,
           ),
           margin: const EdgeInsets.only(
             left: 10,
             right: 10,
             top: 10,
           ),
-          width: MediaQuery.of(context).size.width * 0.45,
-          height: MediaQuery.of(context).size.height * 0.22,
+          width: MediaQuery.of(context).size.width * 0.42,
+          height: MediaQuery.of(context).size.height * 0.3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              product.image == null
-                  ? Image(
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.14,
-                      image: const AssetImage(
-                        'assets/logo-qivi.png',
+              Hero(
+                tag: product.id,
+                child: product.image == null
+                    ? Image(
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        image: const AssetImage(
+                          'assets/logo-qivi.png',
+                        ),
+                      )
+                    : Image.network(
+                        product.image!,
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.15,
                       ),
-                    )
-                  : Image.network(
-                      product.image!,
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.14,
-                    ),
+              ),
               Container(
+                padding: EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       product.name,
-                      style: FONT_CONST.REGULAR_BLACK2_12,
-                      maxLines: 2,
+                      style: FONT_CONST.SEMIBOLD_BLACK_14,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Container(
-                      // alignment: Alignment.center,
-                      child: Text(
-                          "${product.prices![0].price}đ/${product.prices![0].sKU} ",
-                          style: FONT_CONST.REGULAR_DEFAULT_14),
-                    ),
+                    product.category != null
+                        ? Text(
+                            product.category!.name,
+                            style: FONT_CONST.REGULAR_BLACK2_10,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Container(),
+                    RichText(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: "₫",
+                            style: FONT_CONST.MEDIUM_DEFAULT_16
+                                .copyWith(color: Colors.orangeAccent)),
+                        TextSpan(
+                          text: "${product.prices![0].price}",
+                        ),
+                        TextSpan(
+                            text: "/${product.prices![0].sKU} ",
+                            style: FONT_CONST.MEDIUM_BLACK2_14
+                                .copyWith(color: Colors.black38)),
+                      ], style: FONT_CONST.MEDIUM_BLACK2_14),
+                    )
                   ],
                 ),
               )

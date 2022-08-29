@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qivi_app/src/model/entity/cart_item.dart';
@@ -23,6 +21,7 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
     return Scaffold(
         appBar: AppBar(title: const Text("Giỏ hàng")),
         body: Container(
+          color: Colors.white,
           child: ValueListenableBuilder<Box<CartItem>>(
             valueListenable: HiveProvider.getCartItems().listenable(),
             builder: (context, box, _) {
@@ -133,21 +132,57 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        MyDialog.deleteDialog(context, () {
+        //   MyDialog.deleteDialog(context, () {
+        //   CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
+        // }, "Xoá sản phẩm");
+      },
+      confirmDismiss: (direction) async {
+        return await MyDialog.deleteDialog(context, () {
           CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
         }, "Xoá sản phẩm");
       },
-      background: Container(color: Colors.red),
-      child: ExpansionTile(
+      secondaryBackground: Container(
+        color: Colors.red,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(Icons.delete, color: Colors.white),
+              Text('Xoá sản phẩm', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        ),
+      ),
+      background: Container(
+        color: Colors.red,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Icon(Icons.delete, color: Colors.white),
+              Text('Xoá sản phẩm', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        ),
+      ),
+      child: ListTile(
         title: Text(
           cart.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        leading: Image.asset(
-          'assets/images/product.png',
-          // width: MediaQuery.of(context).size.width * 0.3,
-          // height: MediaQuery.of(context).size.width * 0.3,
+        leading: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: Image.asset(
+            'assets/images/product.png',
+            // width: MediaQuery.of(context).size.width * 0.3,
+            // height: MediaQuery.of(context).size.width * 0.3,
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +192,7 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
             Container(
                 padding:
                     const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.28,
                 decoration: BoxDecoration(
                   color: COLOR_CONST.GRAY8.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
@@ -182,7 +217,7 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
                       child: const Icon(FontAwesomeIcons.minus, size: 17),
                     ),
                     Text(cart.quantity.toString(),
-                        style: FONT_CONST.REGULAR.copyWith(fontSize: 20)),
+                        style: FONT_CONST.REGULAR.copyWith(fontSize: 16)),
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -201,22 +236,6 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
                 color: COLOR_CONST.RED2,
                 fontSize: 18,
                 fontStyle: FontStyle.italic)),
-        // children: <Widget>[
-        //   GestureDetector(
-        //     onTap: () {
-        //       MyDialog.deleteDialog(context, () {
-        //         CartItemLocalRepository.deleteCartItemFromLocal(cart.priceId);
-        //       }, "Xoá sản phẩm");
-        //     },
-        //     child: Container(
-        //         padding: const EdgeInsets.only(top: 10, bottom: 10),
-        //         width: MediaQuery.of(context).size.width,
-        //         color: COLOR_CONST.RED2,
-        //         child: Center(
-        //             child:
-        //                 Text("Xoá sản phẩm", style: FONT_CONST.MEDIUM_WHITE_14))),
-        //   )
-        // ],
       ),
     );
   }

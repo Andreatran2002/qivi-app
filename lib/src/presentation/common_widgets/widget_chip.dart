@@ -4,21 +4,17 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 class WidgetChip extends StatelessWidget {
-  WidgetChip(this.chip, {this.callback, this.color, Key? key})
-      : super(key: key);
+  WidgetChip(this.chip, {this.color, Key? key}) : super(key: key);
   final String chip;
-  VoidCallback? callback = () => {};
+  // VoidCallback? callback = () => {};
   Color? color = COLOR_CONST.ORANGE2;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: callback,
-      child: Container(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-              color: COLOR_CONST.ORANGE2,
-              borderRadius: BorderRadius.circular(10)),
-          child: Text(chip, style: TextStyle(color: COLOR_CONST.WHITE))),
-    );
+    return Container(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+        decoration: BoxDecoration(
+            color: COLOR_CONST.ORANGE2,
+            borderRadius: BorderRadius.circular(10)),
+        child: Text(chip, style: FONT_CONST.MEDIUM_WHITE_14));
   }
 }

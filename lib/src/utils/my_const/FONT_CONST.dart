@@ -23,7 +23,7 @@ class FONT_CONST {
   );
 
   //REGULAR
-  static final REGULAR_DEFAULT = REGULAR.copyWith(color: COLOR_CONST.DEFAULT);
+  static final REGULAR_DEFAULT = REGULAR.copyWith(color: COLOR_CONST.BLACK);
   static final REGULAR_DEFAULT_10 = REGULAR_DEFAULT.copyWith(fontSize: 10);
   static final REGULAR_DEFAULT_12 = REGULAR_DEFAULT.copyWith(fontSize: 12);
   static final REGULAR_DEFAULT_14 = REGULAR_DEFAULT.copyWith(fontSize: 14);
@@ -104,6 +104,8 @@ class FONT_CONST {
 
   static final SEMIBOLD_BLACK_24 = SEMIBOLD.copyWith(fontSize: 24);
   static final SEMIBOLD_BLACK_18 = SEMIBOLD.copyWith(fontSize: 18);
+  static final SEMIBOLD_BLACK_16 = SEMIBOLD.copyWith(fontSize: 16);
+  static final SEMIBOLD_BLACK_14 = SEMIBOLD.copyWith(fontSize: 14);
 
   //OSWALD
   static final OSWALD_REGULAR = TextStyle(
