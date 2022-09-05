@@ -56,7 +56,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
       children: [
         ListView(children: [
           Hero(
-              tag: Text(widget.product.id),
+              tag: widget.product.id,
               child: ProductInfoImage(widget.product.image!)),
           ProductInfoDescriptions(widget.product),
           _buildProductSKU()

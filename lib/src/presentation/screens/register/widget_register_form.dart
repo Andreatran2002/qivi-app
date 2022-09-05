@@ -18,14 +18,14 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
   late RegisterBloc _registerBloc;
 
   final _phoneNumberController = TextEditingController();
-  final _fullNameController = TextEditingController();
-  final _addressController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _firstNameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   bool get isPopulated =>
       _phoneNumberController.text.isNotEmpty &&
-      _fullNameController.text.isNotEmpty &&
-      _addressController.text.isNotEmpty &&
+      _lastNameController.text.isNotEmpty &&
+      _firstNameController.text.isNotEmpty &&
       _passwordController.text.isNotEmpty;
 
   @override
@@ -96,11 +96,11 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
                       style: FONT_CONST.SEMIBOLD_BLACK_24),
                 ),
                 const SizedBox(height: 20),
-                _buildTextFieldFullName(),
+                _buildTextFieldlastName(),
                 const SizedBox(height: 14),
                 _buildTextFieldPhoneNumber(),
                 const SizedBox(height: 14),
-                _buildTextFieldAddress(),
+                _buildTextFieldfirstName(),
                 const SizedBox(height: 10),
                 _buildTextFieldPassword(),
                 const SizedBox(height: 14),
@@ -136,8 +136,8 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
             _registerBloc.add(RegisterSubmitButtonEvent(
               phoneNumber: _phoneNumberController.text,
               password: _passwordController.text,
-              address: _addressController.text,
-              fullName: _fullNameController.text,
+              firstName: _firstNameController.text,
+              lastName: _lastNameController.text,
             ));
           }
         },
@@ -230,7 +230,7 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
     );
   }
 
-  _buildTextFieldFullName() {
+  _buildTextFieldlastName() {
     return Container(
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -241,14 +241,14 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
       ),
       child: Center(
         child: TextFormField(
-          controller: _fullNameController,
+          controller: _lastNameController,
           onChanged: (value) {
-            _registerBloc.add(RegisterFullNameChanged(fullName: value));
+            _registerBloc.add(RegisterLastNameChanged(lastName: value));
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (_) {
-            return !_registerBloc.state.isFullNameValid
-                ? 'Họ và tên không được để trống'
+            return !_registerBloc.state.isLastNameValid
+                ? 'Vui lòng không để trống'
                 : null;
           },
           style: FONT_CONST.REGULAR_GRAY1_12,
@@ -263,7 +263,7 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
     );
   }
 
-  _buildTextFieldAddress() {
+  _buildTextFieldfirstName() {
     return Container(
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 17),
@@ -274,14 +274,14 @@ class _WidgetRegisterFormState extends State<WidgetRegisterForm> {
       ),
       child: Center(
         child: TextFormField(
-          controller: _addressController,
+          controller: _firstNameController,
           onChanged: (value) {
-            _registerBloc.add(RegisterAddressChanged(address: value));
+            _registerBloc.add(RegisterFirstNameChanged(firstName: value));
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (_) {
-            return !_registerBloc.state.isAddressValid
-                ? 'Địa chỉ không được để trống'
+            return !_registerBloc.state.isFirstNameValid
+                ? 'Vui lòng không để trống'
                 : null;
           },
           style: FONT_CONST.REGULAR_GRAY1_12,

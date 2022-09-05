@@ -21,31 +21,31 @@ class RegisterPhoneNumberChanged extends RegisterEvent {
   }
 }
 
-class RegisterFullNameChanged extends RegisterEvent {
-  final String fullName;
+class RegisterLastNameChanged extends RegisterEvent {
+  final String lastName;
 
-  const RegisterFullNameChanged({required this.fullName});
+  const RegisterLastNameChanged({required this.lastName});
 
   @override
-  List<Object> get props => [fullName];
+  List<Object> get props => [lastName];
 
   @override
   String toString() {
-    return 'RegisterFullNameChanged{fullName: $fullName}';
+    return 'RegisterLastNameChanged{LastName: $lastName}';
   }
 }
 
-class RegisterAddressChanged extends RegisterEvent {
-  final String address;
+class RegisterFirstNameChanged extends RegisterEvent {
+  final String firstName;
 
-  const RegisterAddressChanged({required this.address});
+  const RegisterFirstNameChanged({required this.firstName});
 
   @override
-  List<Object> get props => [address];
+  List<Object> get props => [firstName];
 
   @override
   String toString() {
-    return 'RegisterAddressChanged{address: $address}';
+    return 'RegisterFirstNameChanged{FirstName: $firstName}';
   }
 }
 
@@ -66,15 +66,15 @@ class RegisterPasswordChanged extends RegisterEvent {
 class RegisterSubmitButtonEvent extends RegisterEvent {
   final String phoneNumber;
   final String password;
-  final String address;
-  final String fullName;
+  final String firstName;
+  final String lastName;
   const RegisterSubmitButtonEvent({
     required this.phoneNumber,
     required this.password,
-    required this.address,
-    required this.fullName,
+    required this.firstName,
+    required this.lastName,
   });
 
   @override
-  List<Object> get props => [fullName, address, phoneNumber, password];
+  List<Object> get props => [lastName, firstName, phoneNumber, password];
 }

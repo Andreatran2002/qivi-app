@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Container(
           color: COLOR_CONST.BASELOGIN,
           child: ListView(
-            children: [_buildLogo(), _buildLoginForm()],
+            children: [_buildLogo(), _buildRegisterForm()],
           ),
         ),
       ),
@@ -33,5 +33,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _buildLogo() => WidgetLogoQivi();
-  _buildLoginForm() => const WidgetRegisterForm();
+  _buildRegisterForm() => const WidgetRegisterForm();
 }

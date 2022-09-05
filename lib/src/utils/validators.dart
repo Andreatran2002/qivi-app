@@ -23,7 +23,7 @@ class Validators {
     return name.isNotEmpty;
   }
 
-  static isValidAddress(String address) {
-    return address.isNotEmpty;
+  static isValidWord(String word) {
+    return word.isNotEmpty;
   }
 }

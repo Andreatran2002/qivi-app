@@ -13,8 +13,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }) : super(RegisterState.empty()) {
     on<RegisterPasswordChanged>(_mapRegisterPasswordChangedToState);
     on<RegisterPhoneNumberChanged>(_mapRegisterPhoneNumberChangedToState);
-    on<RegisterFullNameChanged>(_mapRegisterFullNameChangedToState);
-    on<RegisterAddressChanged>(_mapRegisterAddressChangedToState);
+    on<RegisterLastNameChanged>(_mapRegisterLastNameChangedToState);
+    on<RegisterFirstNameChanged>(_mapRegisterFirstNameChangedToState);
     on<RegisterSubmitButtonEvent>(_mapRegisterSubmitRegisterToState);
   }
 
@@ -26,19 +26,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         isPasswordValid: Validators.isValidPassword(event.password)));
   }
 
-  void _mapRegisterFullNameChangedToState(
-    RegisterFullNameChanged event,
+  void _mapRegisterLastNameChangedToState(
+    RegisterLastNameChanged event,
     Emitter<RegisterState> emit,
   ) {
-    emit(state.update(isFullNameValid: Validators.isValidName(event.fullName)));
+    emit(state.update(isLastNameValid: Validators.isValidName(event.lastName)));
   }
 
-  void _mapRegisterAddressChangedToState(
-    RegisterAddressChanged event,
+  void _mapRegisterFirstNameChangedToState(
+    RegisterFirstNameChanged event,
     Emitter<RegisterState> emit,
   ) {
-    emit(
-        state.update(isAddressValid: Validators.isValidAddress(event.address)));
+    emit(state.update(
+        isFirstNameValid: Validators.isValidWord(event.firstName)));
   }
 
   void _mapRegisterPhoneNumberChangedToState(
@@ -57,10 +57,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterState.loading());
 
       await userRepository.signUp(
-          fullName: event.fullName,
-          phoneNumber: event.phoneNumber,
-          password: event.password,
-          address: event.address);
+        firstName: event.firstName,
+        phoneNumber: event.phoneNumber,
+        password: event.password,
+        lastName: event.lastName,
+      );
       bool isSignedIn = await userRepository.isSignedIn();
 
       if (isSignedIn) {

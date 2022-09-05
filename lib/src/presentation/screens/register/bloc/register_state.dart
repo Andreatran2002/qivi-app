@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class RegisterState {
   final bool isPhoneNumberValid;
   final bool isPasswordValid;
-  final bool isAddressValid;
-  final bool isFullNameValid;
+  final bool isFirstNameValid;
+  final bool isLastNameValid;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
@@ -13,14 +13,14 @@ class RegisterState {
   bool get isFormValid =>
       isPhoneNumberValid &&
       isPasswordValid &&
-      isAddressValid &&
-      isFullNameValid;
+      isFirstNameValid &&
+      isLastNameValid;
 
   const RegisterState({
     required this.isPhoneNumberValid,
     required this.isPasswordValid,
-    required this.isAddressValid,
-    required this.isFullNameValid,
+    required this.isFirstNameValid,
+    required this.isLastNameValid,
     required this.isSubmitting,
     required this.isSuccess,
     required this.isFailure,
@@ -30,8 +30,8 @@ class RegisterState {
     return const RegisterState(
       isPhoneNumberValid: true,
       isPasswordValid: true,
-      isAddressValid: true,
-      isFullNameValid: true,
+      isFirstNameValid: true,
+      isLastNameValid: true,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -42,8 +42,8 @@ class RegisterState {
     return const RegisterState(
       isPhoneNumberValid: true,
       isPasswordValid: true,
-      isAddressValid: true,
-      isFullNameValid: true,
+      isFirstNameValid: true,
+      isLastNameValid: true,
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
@@ -54,8 +54,8 @@ class RegisterState {
     return const RegisterState(
       isPhoneNumberValid: true,
       isPasswordValid: true,
-      isAddressValid: true,
-      isFullNameValid: true,
+      isFirstNameValid: true,
+      isLastNameValid: true,
       isSuccess: false,
       isSubmitting: false,
       isFailure: true,
@@ -66,8 +66,8 @@ class RegisterState {
     return const RegisterState(
       isPhoneNumberValid: true,
       isPasswordValid: true,
-      isAddressValid: true,
-      isFullNameValid: true,
+      isFirstNameValid: true,
+      isLastNameValid: true,
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
@@ -77,13 +77,13 @@ class RegisterState {
   RegisterState update(
       {bool? isPhoneNumberValid,
       bool? isPasswordValid,
-      bool? isAddressValid,
-      bool? isFullNameValid}) {
+      bool? isFirstNameValid,
+      bool? isLastNameValid}) {
     return copyWith(
       isPhoneNumberValid: isPhoneNumberValid,
       isPasswordValid: isPasswordValid,
-      isAddressValid: isAddressValid,
-      isFullNameValid: isFullNameValid,
+      isFirstNameValid: isFirstNameValid,
+      isLastNameValid: isLastNameValid,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -93,8 +93,8 @@ class RegisterState {
   RegisterState copyWith({
     bool? isPhoneNumberValid,
     bool? isPasswordValid,
-    bool? isAddressValid,
-    bool? isFullNameValid,
+    bool? isFirstNameValid,
+    bool? isLastNameValid,
     bool? isSubmitting,
     bool? isSuccess,
     bool? isFailure,
@@ -102,8 +102,8 @@ class RegisterState {
     return RegisterState(
       isPhoneNumberValid: isPhoneNumberValid ?? this.isPhoneNumberValid,
       isPasswordValid: isPasswordValid ?? this.isPasswordValid,
-      isAddressValid: isAddressValid ?? this.isAddressValid,
-      isFullNameValid: isFullNameValid ?? this.isFullNameValid,
+      isFirstNameValid: isFirstNameValid ?? this.isFirstNameValid,
+      isLastNameValid: isLastNameValid ?? this.isLastNameValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -112,6 +112,6 @@ class RegisterState {
 
   @override
   String toString() {
-    return 'RegisterState{isPhoneNumberValid: $isPhoneNumberValid, isPasswordValid: $isPasswordValid, isAddressValid: $isAddressValid, isFullNameValid: $isFullNameValid isSubmitting: $isSubmitting, isSuccess: $isSuccess, isFailure: $isFailure}';
+    return 'RegisterState{isPhoneNumberValid: $isPhoneNumberValid, isPasswordValid: $isPasswordValid, isFirstNameValid: $isFirstNameValid, isLastNameValid: $isLastNameValid isSubmitting: $isSubmitting, isSuccess: $isSuccess, isFailure: $isFailure}';
   }
 }

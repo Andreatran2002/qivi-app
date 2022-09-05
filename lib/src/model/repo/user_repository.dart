@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:graphql/client.dart';
 import 'package:qivi_app/src/client.dart';
+import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/model/entity/user.dart';
 import 'package:qivi_app/src/model/local/pref.dart';
 
@@ -10,26 +11,25 @@ class UserRepository {
   Pref localRef = LocalPref();
   Pref memoryRef = MemoryPref();
   Future<String> signUp(
-      {required String fullName,
-      required String address,
+      {required String firstName,
+      required String lastName,
       required String phoneNumber,
       required String password}) async {
     try {
       final GraphQLClient _client = await getClient();
-
       final QueryOptions options = QueryOptions(
           document: gql(
             r'''
-    mutation($fullName : String! , $address: String! , $password: String!, $phoneNumber : String!){
-  createUser (fullName: $fullName, address: $address, password:$password, phoneNumber: $phoneNumber) {
+    mutation($firstName : String! , $lastName: String! , $password: String!, $phoneNumber : String!){
+  createUser(firstName: $firstName, lastName: $lastName, password: $password, phoneNumber: $phoneNumber){
     message
   }
 }
       ''',
           ),
           variables: {
-            "fullName": fullName,
-            "address": address,
+            "firstName": firstName,
+            "lastName": lastName,
             "password": password,
             "phoneNumber": phoneNumber
           });
@@ -37,11 +37,10 @@ class UserRepository {
       final QueryResult result = await _client.query(options);
 
       if (result.hasException) {
-        print(result.exception.toString());
+        return 'undefined-error';
       }
       return result.data!['createUser']['message'];
     } catch (e) {
-      print(e);
       return 'undefined-error';
     }
   }
@@ -54,13 +53,17 @@ class UserRepository {
   }
 
   Future<bool> isSignedIn() async {
-    return await localRef.getString("quynhvyuser") != null;
+    try {
+      String? result = await localRef.getString("quynhvyuser");
+      return result != null;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<User> getUser() async {
     Map<String, dynamic> userString =
         jsonDecode(await localRef.getString("quynhvyuser"));
-    print("GetUser : $userString");
     return User.fromJson(userString);
   }
 
@@ -78,8 +81,8 @@ class UserRepository {
       id
       userName
       phoneNumber
-      fullName
-      address
+      firstName
+      lastName
     }
   }
 }
@@ -90,15 +93,10 @@ class UserRepository {
       final QueryResult result = await _client.query(options);
 
       if (result.hasException) {
-        print(result.exception.toString());
+        return 'undefined-error';
       }
 
       if (result.data!['authenticationByPhoneNumber']['message'] == "success") {
-        print("success");
-        print(result.data!['authenticationByPhoneNumber']['data']['id']);
-        print("data ne" +
-            User.fromJson(result.data!['authenticationByPhoneNumber']['data'])
-                .toString());
         await localRef.saveString(
             "quynhvyuser",
             jsonEncode(User.fromJson(
@@ -107,8 +105,56 @@ class UserRepository {
 
       return result.data!['authenticationByPhoneNumber']['message'];
     } catch (e) {
-      print(e);
       return 'undefined-error';
     }
   }
+
+  Future<AppResponse<List<UserOrderInfo>>> getUserOderInfo() async {
+    try {
+      User userInfo = await getUser();
+
+      final GraphQLClient _client = await getClient();
+
+      final QueryOptions options = QueryOptions(
+          document: gql(
+            r'''
+   query($id : String!){
+  userOrderInfos: recipientInfoByUserIdAsync(id: $id){
+    data {
+      id
+      userId
+    phoneNumber
+    recipient
+    address
+    }
+    message
+  }
+}
+
+      ''',
+          ),
+          variables: {"id": userInfo.id});
+
+      final QueryResult result = await _client.query(options);
+
+      if (result.hasException) {
+        return AppResponse<List<UserOrderInfo>>(message: 'undefined-error');
+      }
+      List<UserOrderInfo> userOrderInfos = [];
+      print(result.data!['userOrderInfos']['data']);
+      if (result.data!['userOrderInfos']['message'] == "success") {
+        result.data!['userOrderInfos']['data'].forEach((a) {
+          userOrderInfos.add(UserOrderInfo.fromJson(a));
+        });
+      }
+
+      return AppResponse<List<UserOrderInfo>>(
+          data: userOrderInfos,
+          message: result.data!['userOrderInfos']['message']);
+    } catch (e) {
+      return AppResponse<List<UserOrderInfo>>(message: 'undefined-error');
+    }
+  }
+
+  // Future<bool> createUserOrderInfo() {}
 }

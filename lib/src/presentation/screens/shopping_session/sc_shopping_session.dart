@@ -42,24 +42,22 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
         ),
       );
     } else {
-      return Stack(children: [
-        Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(8),
-                itemCount: carts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final cart = carts[index];
+      return Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(8),
+              itemCount: carts.length,
+              itemBuilder: (BuildContext context, int index) {
+                final cart = carts[index];
 
-                  return _buildCartItem(context, cart);
-                },
-              ),
+                return _buildCartItem(context, cart);
+              },
             ),
-          ],
-        ),
-        Positioned(bottom: 0, right: 0, left: 0, child: _buildBuyOption())
-      ]);
+          ),
+          _buildBuyOption()
+        ],
+      );
     }
   }
 
@@ -72,11 +70,14 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
         carts
             .forEach(((element) => result += element.price * element.quantity));
         return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-              boxShadow: [BoxShadow()],
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 1, spreadRadius: 1, color: Colors.black12),
+              ],
             ),
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -110,11 +111,12 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
                         child: Container(
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * 0.8,
-                            child: Text("Đặt hàng",
+                            child: Text("Mua hàng",
                                 style: FONT_CONST.MEDIUM_WHITE
                                     .copyWith(fontSize: 20))),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(AppRouter.ORDER);
+                          Navigator.of(context)
+                              .pushNamed(AppRouter.ORDER, arguments: result);
                         })
                   ],
                 ),
@@ -175,11 +177,12 @@ class _ShoppingSessionScreenState extends State<ShoppingSessionScreen> {
         ),
         leading: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
+              borderRadius: BorderRadius.circular(10),
+              color: COLOR_CONST.BLACK2),
           clipBehavior: Clip.hardEdge,
-          child: Image.asset(
-            'assets/images/product.png',
+          child: Image.network(
+            cart.image,
+            // 'assets/images/product.png',
             // width: MediaQuery.of(context).size.width * 0.3,
             // height: MediaQuery.of(context).size.width * 0.3,
           ),

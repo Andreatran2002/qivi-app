@@ -6,6 +6,7 @@ import 'package:qivi_app/src/model/entity/entity.dart';
 import 'package:qivi_app/src/model/repo/repo.dart';
 import 'package:qivi_app/src/presentation/common_widgets/common_widgets.dart';
 import 'package:qivi_app/src/presentation/common_widgets/product_card_hozi.dart';
+import 'package:qivi_app/src/utils/my_const/my_const.dart';
 
 class WidgetProductInCategory extends StatefulWidget {
   WidgetProductInCategory(this.categoryId, {Key? key}) : super(key: key);
@@ -110,8 +111,50 @@ class _WidgetProductInCategoryState extends State<WidgetProductInCategory>
   @override
   Widget build(BuildContext context) {
     return _isFirstLoadRunning
-        ? const Center(
-            child: CircularProgressIndicator(),
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 220,
+                      mainAxisExtent: 200,
+                      childAspectRatio: 6 / 5,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  controller: _controller,
+                  itemCount: 8,
+                  itemBuilder: (_, index) => Container(
+                      margin: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                      ),
+                      child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            // color: COLOR_CONST.BASE,
+                          ),
+                          // margin: const EdgeInsets.only(
+                          //   left: 10,
+                          //   right: 10,
+                          //   top: 10,
+                          // ),
+                          width: MediaQuery.of(context).size.width * 0.42,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              MySkeleton(0.5, 0.15),
+                              MySkeleton(0.24, 0.02),
+                              MySkeleton(0.42, 0.018),
+                            ],
+                          ))),
+                ),
+              ),
+            ],
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.center,
